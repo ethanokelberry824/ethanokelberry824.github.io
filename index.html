@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-mode="tech" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
 
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Ethan Okelberry · Sales Engineering & Computer Science">
-  <meta property="og:description" content="Technical enough to build it. Clear enough to sell it. Ex-Cisco Technical Sales Engineering Intern · AWS Student Builder Campus Leader · CS @ CSUSM.">
+  <meta property="og:description" content="I build it. I sell it. Ex-Cisco Technical Sales Engineering Intern · AWS Student Builder Campus Leader · CS @ CSUSM.">
   <meta property="og:url" content="https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/">
   <meta property="og:image" content="https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <meta property="profile:last_name" content="Okelberry">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ethan Okelberry · Sales Engineering & Computer Science">
-  <meta name="twitter:description" content="Technical enough to build it. Clear enough to sell it.">
+  <meta name="twitter:description" content="I build it. I sell it.">
   <meta name="twitter:image" content="https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/og-image.png">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -30,13 +30,12 @@
   <link rel="stylesheet" href="css/style.css">
 
   <script>
-    // Apply saved theme and audience before first paint, so there's no flash.
+    // Apply saved theme before first paint, so there's no flash.
     (function () {
-      var d = document.documentElement, t = null, m = null;
-      try { t = localStorage.getItem("eo-theme"); m = localStorage.getItem("eo-mode"); } catch (e) {}
+      var d = document.documentElement, t = null;
+      try { t = localStorage.getItem("eo-theme"); } catch (e) {}
       if (!t) t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
       d.setAttribute("data-theme", t);
-      if (m === "biz" || m === "tech") d.setAttribute("data-mode", m);
       d.classList.add("js");
     })();
   </script>
@@ -48,6 +47,7 @@
     "name": "Ethan Okelberry",
     "jobTitle": "Computer Science Student · Aspiring Sales Engineer",
     "email": "mailto:ethanokelberry824@gmail.com",
+    "telephone": "+1-916-300-3650",
     "address": { "@type": "PostalAddress", "addressLocality": "San Marcos", "addressRegion": "CA" },
     "alumniOf": [
       { "@type": "CollegeOrUniversity", "name": "California State University San Marcos" },
@@ -73,25 +73,13 @@
       <nav class="nav-links" id="navLinks" aria-label="Sections">
         <a href="#discovery"><span class="nav-num">01</span>Discovery</a>
         <a href="#experience"><span class="nav-num">02</span>Experience</a>
-        <a href="#demos"><span class="nav-num">03</span>Demos</a>
-        <a href="#toolkit"><span class="nav-num">04</span>Toolkit</a>
-        <a href="#github"><span class="nav-num">05</span>GitHub</a>
-        <a href="#contact"><span class="nav-num">06</span>Contact</a>
+        <a href="#projects"><span class="nav-num">03</span>Projects</a>
+        <a href="#skills"><span class="nav-num">04</span>Skills</a>
+        <a href="#contact"><span class="nav-num">05</span>Contact</a>
       </nav>
 
       <div class="nav-tools">
-        <div class="mode-switch" role="group" aria-label="Explain everything for">
-          <span class="mode-thumb" aria-hidden="true"></span>
-          <button type="button" data-set-mode="tech" aria-pressed="true" title="Explain it like I'm an engineer">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg><span>Technical</span>
-          </button>
-          <button type="button" data-set-mode="biz" aria-pressed="false" title="Explain it like I'm an executive">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg><span>Business</span>
-          </button>
-        </div>
-        <button type="button" class="icon-btn" id="termBtn" aria-label="Open terminal (backtick key)" title="Terminal ( ` )">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 4 4-4 4M12 17h7"/></svg>
-        </button>
+        <a class="btn btn-sm btn-primary nav-cta" id="navCall" href="tel:+19163003650">Call me</a>
         <button type="button" class="icon-btn" id="themeBtn" aria-label="Switch light or dark theme" title="Theme">
           <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
           <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
@@ -111,41 +99,33 @@
       <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="statusText">Open to Sales Engineering & Solutions Consulting roles</span></p>
+          <p class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="statusText"></span></p>
           <h1 class="hero-name">Ethan<br>Okelberry</h1>
           <p class="hero-role" aria-live="off"><span class="prompt" aria-hidden="true">~$</span> <span id="roleTyper">Aspiring Sales Engineer</span><span class="caret" aria-hidden="true"></span></p>
           <p class="hero-headline" id="heroHeadline"></p>
           <p class="hero-summary" id="heroSummary"></p>
-
           <div class="cta-row" id="heroCtas"></div>
-
-          <div class="audience-card">
-            <p><strong>This site speaks two languages.</strong> Who's reading?</p>
-            <div class="audience-btns">
-              <button type="button" data-set-mode="tech">I'm technical</button>
-              <button type="button" data-set-mode="biz">I'm on the business side</button>
-            </div>
-          </div>
         </div>
 
         <div class="hero-visual">
-          <div class="portrait-wrap">
-            <div class="portrait" id="portrait">
-              <div class="portrait-glow" aria-hidden="true"></div>
-              <div class="portrait-frame">
-                <picture>
-                  <source type="image/webp" srcset="assets/headshot-480.webp 480w, assets/headshot-800.webp 800w" sizes="(max-width: 860px) 240px, 400px">
-                  <img src="assets/headshot-800.jpg" width="800" height="1000" alt="Portrait of Ethan Okelberry" fetchpriority="high">
-                </picture>
-              </div>
+          <div class="portrait" id="portrait">
+            <div class="portrait-glow" aria-hidden="true"></div>
+            <div class="portrait-frame">
+              <picture>
+                <source type="image/webp" srcset="assets/headshot-480.webp 480w, assets/headshot-800.webp 800w" sizes="(max-width: 860px) 240px, 400px">
+                <img src="assets/headshot-800.jpg" width="800" height="1000" alt="Portrait of Ethan Okelberry" fetchpriority="high">
+              </picture>
             </div>
-            <ul class="portrait-badges" id="heroBadges"></ul>
           </div>
         </div>
       </div>
 
       <div class="container">
-        <dl class="stats" id="stats"></dl>
+        <div class="creds" id="creds"></div>
+        <div class="startup">
+          <p class="startup-label" id="startupLabel"></p>
+          <dl class="stats" id="stats"></dl>
+        </div>
       </div>
     </section>
 
@@ -155,7 +135,7 @@
         <header class="section-head reveal">
           <p class="eyebrow"><span>01</span> Discovery</p>
           <h2>Tell me what your team needs.</h2>
-          <p class="lede">Every good sales cycle starts with discovery. Pick what the role calls for, and I'll pull the proof.</p>
+          <p class="lede">Pick what the role calls for, and I'll show you where I've already done it.</p>
         </header>
         <div class="discovery reveal">
           <div class="needs-wrap">
@@ -173,7 +153,6 @@
         <header class="section-head reveal">
           <p class="eyebrow"><span>02</span> Track record</p>
           <h2>Where I've done it.</h2>
-          <p class="lede">From member relations to live sales to enterprise tech, every role has been about earning trust and explaining value.</p>
         </header>
         <div class="timeline" id="timeline">
           <div class="timeline-line" aria-hidden="true"><span id="timelineFill"></span></div>
@@ -181,58 +160,41 @@
 
         <h3 class="sub-head reveal" id="education">Education</h3>
         <div class="edu-grid" id="eduGrid"></div>
+        <p class="edu-note reveal" id="eduNote"></p>
       </div>
     </section>
 
-    <!-- 03 DEMOS -------------------------------------------------------- -->
-    <section class="section" id="demos" data-stage="03" data-stage-name="Demos">
+    <!-- 03 PROJECTS ----------------------------------------------------- -->
+    <section class="section" id="projects" data-stage="03" data-stage-name="Projects">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow"><span>03</span> Demo</p>
-          <h2>Don't take my word for it. Run it.</h2>
-          <p class="lede">Each project below has a working, interactive version. Switch between <button type="button" class="inline-mode" data-set-mode="tech">Technical</button> and <button type="button" class="inline-mode" data-set-mode="biz">Business</button> to hear the same project pitched two ways.</p>
+          <p class="eyebrow"><span>03</span> Projects</p>
+          <h2>What I've built.</h2>
+          <p class="lede">Both agents run a quick demo when you scroll to them. The demos use sample data.</p>
         </header>
-        <div class="projects" id="projects"></div>
+        <div class="projects" id="projectList"></div>
       </div>
     </section>
 
-    <!-- 04 TOOLKIT ------------------------------------------------------ -->
-    <section class="section" id="toolkit" data-stage="04" data-stage-name="Toolkit">
+    <!-- 04 SKILLS ------------------------------------------------------- -->
+    <section class="section" id="skills" data-stage="04" data-stage-name="Skills">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow"><span>04</span> Toolkit</p>
-          <h2>Skills, with receipts.</h2>
-          <p class="lede">Anyone can list skills. Click one to see where I actually used it.</p>
+          <p class="eyebrow"><span>04</span> Skills</p>
+          <h2>What I work with.</h2>
         </header>
-        <div class="toolkit reveal">
-          <div class="skill-groups" id="skillGroups"></div>
-          <aside class="receipt card" id="receipt" aria-live="polite"></aside>
-        </div>
+        <div class="skills card reveal" id="skillList"></div>
       </div>
     </section>
 
-    <!-- 05 GITHUB ------------------------------------------------------- -->
-    <section class="section" id="github" data-stage="05" data-stage-name="GitHub">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow"><span>05</span> Built in public</p>
-          <h2>Live from GitHub.</h2>
-          <p class="lede">Pulled straight from the GitHub API every time this page loads, so it's always current.</p>
-        </header>
-        <div class="gh reveal" id="ghRoot">
-          <div class="gh-loading"><span class="spinner" aria-hidden="true"></span> Fetching repositories&hellip;</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 06 CONTACT ------------------------------------------------------ -->
-    <section class="section contact" id="contact" data-stage="06" data-stage-name="Contact">
+    <!-- 05 CONTACT ------------------------------------------------------ -->
+    <section class="section contact" id="contact" data-stage="05" data-stage-name="Contact">
       <div class="container">
         <div class="contact-grid">
           <div class="contact-copy reveal">
-            <p class="eyebrow"><span>06</span> Close</p>
+            <p class="eyebrow"><span>05</span> Contact</p>
             <h2>Let's talk.</h2>
-            <p class="lede">I'm looking for Sales Engineering and Solutions Consulting roles that sit between the product and the customer. If your team needs someone technical enough to build it and clear enough to sell it, I'd like to hear from you.</p>
+            <p class="lede">I'm looking for Sales Engineering and Solutions Consulting roles where I sit between the product and the customer. Call, text or email me. I'll get back to you fast.</p>
             <div class="contact-actions" id="contactActions"></div>
           </div>
           <aside class="tldr card reveal" aria-label="Summary for recruiters">
@@ -247,39 +209,20 @@
   <footer class="footer">
     <div class="container footer-inner">
       <p>&copy; <span id="year">2026</span> Ethan Okelberry</p>
-      <p class="footer-hint">Tip: press <kbd>`</kbd> to open the terminal</p>
+      <p id="footerContact"></p>
       <p><a href="#top">Back to top &uarr;</a></p>
     </div>
   </footer>
 
-  <!-- Terminal --------------------------------------------------------- -->
-  <div class="term-overlay" id="termOverlay" hidden>
-    <div class="term" role="dialog" aria-modal="true" aria-labelledby="termTitle">
-      <div class="term-bar">
-        <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="term-title" id="termTitle">ethan@portfolio: ~</span>
-        <button type="button" class="term-close" id="termClose" aria-label="Close terminal">&times;</button>
-      </div>
-      <div class="term-body" id="termBody">
-        <div id="termOut" aria-live="polite"></div>
-        <form class="term-line" id="termForm" autocomplete="off">
-          <label for="termInput" class="term-ps1">ethan@portfolio:~$</label>
-          <input id="termInput" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command">
-        </form>
-      </div>
-    </div>
-  </div>
-
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <noscript>
-    <div class="noscript">This site is interactive and works best with JavaScript turned on. You can still <a href="assets/Ethan_Okelberry_Resume.pdf">download my resume (PDF)</a> or email <a href="mailto:ethanokelberry824@gmail.com">ethanokelberry824@gmail.com</a>.</div>
+    <div class="noscript">This site works best with JavaScript turned on. You can still <a href="assets/Ethan_Okelberry_Resume.pdf">download my resume (PDF)</a>, call <a href="tel:+19163003650">(916) 300-3650</a> or email <a href="mailto:ethanokelberry824@gmail.com">ethanokelberry824@gmail.com</a>.</div>
   </noscript>
 
   <script src="js/content.js" defer></script>
+  <script src="js/logos.js" defer></script>
   <script src="js/demos.js" defer></script>
-  <script src="js/github.js" defer></script>
-  <script src="js/terminal.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

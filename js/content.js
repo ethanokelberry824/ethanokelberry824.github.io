@@ -2,181 +2,155 @@
    SITE CONTENT
    --------------------------------------------------------------------------
    Everything on the site is rendered from this file. To update the site
-   (new job, new project, new stat), edit the data below and push. There's no
-   build step.
-
-   Text that has two versions uses { tech: "...", biz: "..." }. The
-   "Technical / Business" switch in the nav picks which one is shown.
+   (new job, new project, new number), edit the data below and push.
+   There's no build step.
    ========================================================================== */
 
 window.SITE = {
   name: "Ethan Okelberry",
-  initials: "EO",
   location: "San Marcos, CA",
   email: "ethanokelberry824@gmail.com",
+  phone: "(916) 300-3650",
+  phoneHref: "+19163003650",
   linkedin: "https://www.linkedin.com/in/ethan-okelberry",
   githubUser: "okelberrye-cloud",
   resume: "assets/Ethan_Okelberry_Resume.pdf",
-
-  // Set to a scheduling link (Calendly, Cal.com, etc.) to show a "Book a call" button.
-  bookingUrl: "",
 
   status: "Open to Sales Engineering & Solutions Consulting roles",
 
   // Rotating line under the name in the hero.
   roles: [
     "Aspiring Sales Engineer",
-    "CS @ Cal State San Marcos",
     "ex-Cisco Technical Sales Engineering Intern",
     "AWS Student Builder Campus Leader",
-    "Builder of AI automations",
+    "Founding team, live commerce startup",
+    "CS @ Cal State San Marcos",
   ],
 
-  headline: "Technical enough to build it. Clear enough to sell it.",
+  headline: "I build it. I sell it.",
 
-  summary: {
-    tech:
-      "I'm a Computer Science student who builds with Python, SQL, REST APIs and generative AI, and I can explain every layer of what I build. Former Technical Sales Engineering Intern at Cisco, current AWS Student Builder Campus Leader.",
-    biz:
-      "I turn complex technology into clear customer value. Former Technical Sales Engineering Intern at Cisco, AWS Student Builder Campus Leader, and the first hire at a live-commerce startup, where I sold at 2× quota.",
+  summary:
+    "I'm a Computer Science student at Cal State San Marcos going after Sales Engineering and Solutions Consulting roles. I was a Technical Sales Engineering Intern at Cisco, I'm an AWS Student Builder Campus Leader, and I was the first hire at a live commerce startup where I sold at 2× quota.",
+
+  // Logo strip under the hero.
+  credentials: [
+    { logo: "cisco", title: "Technical Sales Engineering Intern", note: "Summer 2026" },
+    { logo: "aws", title: "Student Builder Campus Leader", note: "2026 · via NEXT GEN·TEAM" },
+  ],
+
+  // The startup numbers strip under the logos.
+  startup: {
+    label: "Founding team member at a live digital commerce startup",
+    stats: [
+      { value: 2, suffix: "×", label: "Quota, hosting live sales streams" },
+      { value: 500, suffix: "+", label: "Live viewers per stream" },
+      { value: 10, suffix: "+", label: "Sellers as the startup scaled" },
+      { value: 4, suffix: "", label: "Sellers I led" },
+    ],
   },
 
-  heroBadges: [
-    { label: "Cisco", value: "Technical Sales Engineering Intern" },
-    { label: "AWS", value: "Student Builder Campus Leader" },
-    { label: "2× quota", value: "Live sales, founding team" },
-  ],
-
-  stats: [
-    { value: 2, suffix: "×", label: "Quota beaten hosting live sales streams" },
-    { value: 500, suffix: "+", label: "Live viewers per stream at a startup I helped found" },
-    { value: 10, prefix: "Top ", suffix: "%", label: "Of class in Computer Science coursework" },
-    { value: 15, suffix: "", label: "Personalized emails per run from my AI outreach agent" },
-  ],
-
   /* ------------------------------------------------------------------------
-     01 / DISCOVERY: a recruiter picks what the role needs and gets evidence.
+     01 / DISCOVERY: a recruiter picks what the role needs and gets proof.
      ------------------------------------------------------------------------ */
+  defaultNeeds: ["demo"],
   needs: [
     {
       id: "demo",
       label: "Runs technical demos & presentations",
       evidence: [
-        { src: "Cisco", text: "Built and delivered a 10-minute interactive explainer on Cisco AI infrastructure, with a live simulation of GPU-cluster networking.", href: "#project-cisco-ai" },
-        { src: "Flash Bang Authentics", text: "Hosted live sales streams for 500+ viewers per stream.", href: "#exp-flashbang" },
-        { src: "AWS", text: "Hosts cloud fundamentals workshops at Cal State San Marcos as an AWS Student Builder Campus Leader.", href: "#exp-aws" },
+        { src: "Cisco", text: "Built a 10-minute presentation teaching Cisco AI Infrastructure, with a live simulation of how one slow network link stalls an entire GPU cluster.", href: "#project-cisco-ai" },
+        { src: "Cisco", text: "Presented my intern capstone, an AI-driven solution, to Cisco's Head of AI.", href: "#exp-cisco" },
+        { src: "Flash Bang Authentics", text: "Hosted live sales streams on TikTok for 500+ viewers at a time.", href: "#exp-flashbang" },
+        { src: "AWS", text: "Hosts cloud fundamentals workshops at Cal State San Marcos.", href: "#exp-aws" },
       ],
     },
     {
       id: "translate",
       label: "Translates tech into business value",
       evidence: [
-        { src: "Cisco", text: "Researched, wrote and structured customer-facing reference documentation for a sales enablement project aimed at higher education.", href: "#exp-cisco" },
-        { src: "Sports Analytics", text: "Published recurring projections with clear metrics, assumptions and limitations, written for non-technical readers.", href: "#project-mlb" },
-        { src: "This site", text: "Every project here has a Technical and a Business version. Flip the switch at the top of the page." },
-      ],
-    },
-    {
-      id: "sell",
-      label: "Discovery, objection handling & closing",
-      evidence: [
-        { src: "Flash Bang Authentics", text: "Beat quota by 2× through objection handling and upsell strategy.", href: "#exp-flashbang" },
-        { src: "Cisco", text: "Shadowed senior Solutions Engineers through enterprise sales cycles.", href: "#exp-cisco" },
-        { src: "Granite Bay Golf Club", text: "Three years of high-touch member relations: building trust and solving problems fast.", href: "#exp-granitebay" },
-      ],
-    },
-    {
-      id: "technical",
-      label: "Hands-on technical depth",
-      evidence: [
-        { src: "Sports Analytics", text: "Built Python pipelines that ingest, clean and model large historical MLB datasets from public REST APIs.", href: "#project-mlb" },
-        { src: "Outreach Agent", text: "Connected the Hunter.io REST API, Gemini and Gmail into a 7-module automated pipeline.", href: "#project-outreach" },
-        { src: "Education", text: "B.S. in Computer Science at CSUSM (May 2027). Ranked in the top 10% of class in prior CS coursework.", href: "#education" },
+        { src: "Cisco", text: "Researched and wrote customer-facing reference docs for a Cisco product sold to universities.", href: "#exp-cisco" },
+        { src: "Cisco", text: "Turned a full AI infrastructure stack (GPUs, networking, storage, management) into a 10-minute talk anyone can follow.", href: "#project-cisco-ai" },
+        { src: "Flash Bang Authentics", text: "Explained product value live, in real time, to hundreds of viewers per stream.", href: "#exp-flashbang" },
       ],
     },
     {
       id: "ai",
-      label: "AI & automation",
+      label: "Proficient in AI tools",
       evidence: [
-        { src: "Outreach Agent", text: "Uses Gemini to write a personalized email for every verified contact, with no manual steps.", href: "#project-outreach" },
-        { src: "Cisco", text: "Leading a capstone project to identify and develop an AI-driven solution, with findings for Cisco's Head of AI.", href: "#exp-cisco" },
-        { src: "Cisco AI Infrastructure", text: "Explains why AI training clusters depend on lossless, congestion-aware networking.", href: "#project-cisco-ai" },
+        { src: "Claude", text: "Builds custom Claude skills and connectors, like one that pulls lecture transcripts from Otter and files them in Google Drive." },
+        { src: "Gemini", text: "Uses Gemini in my outreach agent to write a personal email for every contact it finds.", href: "#project-outreach" },
+        { src: "Make.com", text: "Built a 7-module automation that runs the whole outreach process with no manual steps.", href: "#project-outreach" },
+        { src: "Sora", text: "Made AI marketing videos with Sora for Flash Bang Authentics.", href: "#exp-flashbang" },
+        { src: "Cisco", text: "Led an intern capstone on an AI-driven solution, presented to Cisco's Head of AI.", href: "#exp-cisco" },
       ],
     },
     {
-      id: "cloud",
-      label: "Cloud & infrastructure",
+      id: "sell",
+      label: "Handles objections & closes",
       evidence: [
-        { src: "AWS", text: "Drives student engagement with AWS services and certifications as Campus Leader.", href: "#exp-aws" },
-        { src: "Cisco AI Infrastructure", text: "Breaks down a full AI stack for a non-specialist audience: GPU compute, AI networking, partner storage, management and validated designs.", href: "#project-cisco-ai" },
-      ],
-    },
-    {
-      id: "enable",
-      label: "Enablement & documentation",
-      evidence: [
-        { src: "Cisco", text: "Wrote customer-facing reference documentation for a new sales enablement project.", href: "#exp-cisco" },
-        { src: "Flash Bang Authentics", text: "Wrote stream scripts and offer structure that made closing more consistent across the team.", href: "#exp-flashbang" },
-        { src: "Cisco AI Infrastructure", text: "Wrote a timed, click-by-click talk track to go with the deck.", href: "#project-cisco-ai" },
-      ],
-    },
-    {
-      id: "lead",
-      label: "Leadership & ownership",
-      evidence: [
-        { src: "Flash Bang Authentics", text: "First employee at a startup that scaled to 10+ sellers. Led a team of 4.", href: "#exp-flashbang" },
-        { src: "AWS", text: "Selected as AWS Student Builder Campus Leader for Cal State San Marcos.", href: "#exp-aws" },
-        { src: "Cisco", text: "Leading the internship capstone project.", href: "#exp-cisco" },
+        { src: "Flash Bang Authentics", text: "Beat quota by 2× using objection handling and upselling, live on camera.", href: "#exp-flashbang" },
+        { src: "Flash Bang Authentics", text: "Led 4 sellers and wrote the stream scripts and offers that made closing more consistent.", href: "#exp-flashbang" },
+        { src: "Cisco", text: "Shadowed senior Solutions Engineers through real enterprise sales cycles.", href: "#exp-cisco" },
       ],
     },
   ],
 
   /* ------------------------------------------------------------------------
-     02 / TRACK RECORD
+     02 / EXPERIENCE
+     logo: "cisco" or "aws" uses js/logos.js. Otherwise `mark` shows as a badge.
      ------------------------------------------------------------------------ */
   experience: [
     {
       id: "exp-cisco",
-      mark: "C",
+      logo: "cisco",
       company: "Cisco",
       role: "Technical Sales Engineering Intern",
       dates: "Jun 2026 – Aug 2026",
       location: "Remote",
       color: "#1ba0d7",
       bullets: [
-        "Shadowed and learned directly from senior Solutions Engineers, gaining insight into enterprise sales cycles.",
-        "Contributed to a new sales enablement project for a Cisco product targeting the higher education vertical, researching, authoring and structuring customer-facing reference documentation.",
-        "Leading a capstone project to identify and develop an AI-driven solution, with findings to be presented to Cisco's Head of AI.",
+        "Led an intern capstone to find and build an AI-driven solution, and presented it to Cisco's Head of AI.",
+        "Contributed to a new sales enablement project for a Cisco product in higher education, researching, writing and structuring the customer-facing reference docs.",
+        "Built a 10-minute presentation teaching Cisco AI Infrastructure, from why the network matters to how Cisco's AI PODs fit together.",
+        "Shadowed senior Solutions Engineers and learned how enterprise sales cycles actually run.",
       ],
-      tags: ["Enterprise sales cycles", "Sales enablement", "Higher-ed vertical", "AI solutions"],
     },
     {
       id: "exp-aws",
-      mark: "AWS",
-      company: "Amazon Web Services",
+      logo: "aws",
+      company: "NEXT GEN·TEAM",
+      companyNote: "AWS Student Builder program",
       role: "AWS Student Builder Campus Leader",
       dates: "Aug 2026 – Present",
       location: "San Marcos, CA",
       color: "#ff9900",
       bullets: [
-        "Selected as an AWS Student Campus Leader at Cal State San Marcos, hosting cloud fundamentals workshops and driving student engagement with AWS services and certifications.",
+        "Selected to represent the AWS Student Builder program at Cal State San Marcos.",
+        "Host cloud fundamentals workshops and get students started on AWS Builder Center, AWS services and certifications.",
+        "Set up a CSUSM Discord community for students learning to build on AWS.",
       ],
-      tags: ["Workshops", "Cloud fundamentals", "Community building"],
     },
     {
       id: "exp-flashbang",
       mark: "FB",
       company: "Flash Bang Authentics",
+      companyNote: "Live digital commerce startup",
       role: "Sports Break Host / Founding Team Member",
       dates: "Sep 2025 – May 2026",
       location: "San Marcos, CA",
       color: "#e5484d",
-      bullets: [
-        "First employee at a live commerce startup that scaled to 10+ sellers and 500+ viewers per stream.",
-        "Hosted live sales streams, exceeding quota by 2× through objection handling and upsell strategy.",
-        "Led a team of 4 sellers, building stream scripts and offer structure to raise close consistency.",
+      stats: [
+        { value: "2×", label: "quota" },
+        { value: "500+", label: "viewers per stream" },
+        { value: "10+", label: "sellers" },
+        { value: "4", label: "sellers led" },
       ],
-      tags: ["2× quota", "Objection handling", "Team lead", "Live presenting"],
+      bullets: [
+        "First employee at a live commerce startup selling licensed sports merchandise on TikTok Live, which grew to 10+ sellers and 500+ viewers per stream.",
+        "Beat quota by 2× hosting live sales streams, handling objections and upselling in real time.",
+        "Led a team of 4 sellers and built the stream scripts and offer structure that made closing more consistent.",
+        "Made AI marketing videos with Sora for the brand.",
+      ],
     },
     {
       id: "exp-granitebay",
@@ -186,10 +160,12 @@ window.SITE = {
       dates: "May 2022 – May 2025",
       location: "Granite Bay, CA",
       color: "#30a46c",
+      stats: [{ value: "3", label: "years" }],
       bullets: [
-        "Delivered high-touch member support and event execution, building strong relationships through clear communication, attention to detail and rapid problem resolution.",
+        "Gave high-touch service to club members for three years, building long-term relationships that kept members coming back.",
+        "Supported tournaments and events, handling logistics and fixing problems on the spot.",
+        "Recognized for reliability and professionalism in a fast-paced, customer-facing job.",
       ],
-      tags: ["Relationship building", "Event execution", "Problem resolution"],
     },
   ],
 
@@ -199,147 +175,73 @@ window.SITE = {
       degree: "B.S. in Computer Science",
       dates: "Jan 2026 – May 2027 (expected)",
       location: "San Marcos, CA",
+      detail: "Coursework: Data Structures and Algorithms, Discrete Mathematics, Software Engineering (in progress)",
+      main: true,
     },
     {
-      school: "Sierra College / Palomar College",
-      degree: "Computer Science coursework · Ranked top 10% of class",
-      dates: "Aug 2023 – Dec 2025",
-      location: "Rocklin, CA / San Marcos, CA",
+      school: "Palomar College",
+      degree: "Computer Science coursework · 15 units",
+      dates: "Aug 2025 – Dec 2025",
+      location: "San Marcos, CA",
+    },
+    {
+      school: "Sierra College",
+      degree: "Computer Science coursework · 59 units",
+      dates: "Aug 2023 – 2025",
+      location: "Rocklin, CA",
     },
   ],
+  educationNote: "74 units of community college coursework, ranked in the top 10% of my class.",
 
   /* ------------------------------------------------------------------------
-     03 / DEMOS: each project has an interactive demo (see js/demos.js).
+     03 / PROJECTS
+     visual: "outline" (numbered list), "outreach" or "fantasy" (js/demos.js)
      ------------------------------------------------------------------------ */
   projects: [
     {
       id: "project-cisco-ai",
-      title: "Cisco AI Infrastructure: Interactive Explainer",
+      title: "Cisco AI Infrastructure Presentation",
       when: "2026 · Cisco internship",
-      stack: ["HTML", "CSS", "JavaScript", "Animation", "Technical storytelling"],
-      demo: "gpu",
-      repo: "cisco-ai-infrastructure",
-      summary: {
-        tech:
-          "A self-contained, offline-ready HTML deck (title card and five slides, 11 scripted builds) that teaches Cisco's AI infrastructure stack. The centerpiece simulates an 8-GPU training ring: every step, the GPUs exchange results, and the step can't finish until the slowest link does. Congest one link and throughput drops from about 50 to 21 steps a minute, which is why lossless, congestion-aware Ethernet matters.",
-        biz:
-          "A 10-minute talk that makes a complex purchase simple: why companies run AI on their own infrastructure (control, compliance, steady-state cost), why the network decides whether very expensive GPUs sit idle, and how Cisco's pre-validated AI PODs take the integration work off the IT team.",
-      },
-      points: {
-        tech: ["8-GPU ring simulation with live throughput and utilization", "Built-in fonts: runs with no internet connection", "Keyboard and clicker navigation, 11 scripted builds"],
-        biz: ["Built for a 10-minute slot, with a timed talk track", "Covers control, compliance and cost", "Ends on business value: buying AI capacity, not parts"],
-      },
+      summary:
+        "A 10-minute presentation I built to teach Cisco AI Infrastructure to people who have never set up an AI cluster.",
+      stack: ["HTML", "JavaScript", "Presenting", "AI infrastructure"],
+      link: { label: "View the presentation", href: "https://okelberrye-cloud.github.io/cisco-ai-infrastructure/" },
+      visual: "outline",
+      outlineTitle: "What the talk covers",
+      outline: [
+        "Why companies run AI on their own hardware: control, compliance and cost.",
+        "A live simulation where one jammed network link drops an 8-GPU cluster from 50 to 21 training steps a minute.",
+        "How Cisco's AI POD fits together: UCS servers with NVIDIA GPUs, Nexus networking, partner storage and validated designs.",
+        "Built from scratch in HTML and JavaScript. Runs offline, with a timed talk track.",
+      ],
     },
     {
       id: "project-outreach",
-      title: "Autonomous Internship Outreach Agent",
+      title: "Internship Outreach Agent",
       when: "Feb 2026",
-      stack: ["Make.com", "REST APIs", "Python", "Gemini AI", "Hunter.io", "Gmail"],
-      demo: "outreach",
-      summary: {
-        tech:
-          "A fully automated pipeline of 7 connected modules. It parses a job listing for the company domain and job title, calls the Hunter.io REST API for verified contacts, prompts Gemini to write a personalized email for each one, and sends through Gmail. It dispatches up to 15 tailored emails per request with no manual input.",
-        biz:
-          "Finding the right person and writing to them is the slowest part of a job search, and the same is true of sales prospecting. This agent turns it into one step: a single job listing in, up to 15 personalized emails to verified contacts out.",
-      },
-      points: {
-        tech: ["7 connected modules", "Hunter.io domain search → verified contacts", "LLM-personalized copy per recipient"],
-        biz: ["Zero manual steps per request", "Up to 15 tailored emails per listing", "The same motion as sales prospecting, automated"],
-      },
+      summary:
+        "Give it a job listing and it finds the right people at that company, then emails each of them a personal note. One listing turns into up to 15 tailored emails with no manual work.",
+      stack: ["Make.com", "Gemini", "Hunter.io", "Gmail"],
+      visual: "outreach",
     },
     {
-      id: "project-mlb",
-      title: "Sports Analytics & AI Prediction Systems",
-      when: "May 2025 – Aug 2025",
-      stack: ["Python", "SQL", "REST APIs", "ETL", "Data modeling"],
-      demo: "mlb",
-      summary: {
-        tech:
-          "Python data pipelines that ingest, clean and model large historical MLB datasets, using public REST APIs to turn raw inputs into structured features and predictive outputs. The end-to-end ETL runs automatically, with scheduled report delivery.",
-        biz:
-          "Raw baseball data in, plain-English projections out, on a schedule. Each report spells out its metrics, assumptions and limitations, so non-technical readers know exactly how far to trust it.",
-      },
-      points: {
-        tech: ["Automated end-to-end ETL", "REST API ingestion → feature engineering", "Scheduled report delivery"],
-        biz: ["Recurring projections, no manual work", "Clear metrics, assumptions and limitations", "Written for non-technical readers"],
-      },
+      id: "project-fantasy",
+      title: "Fantasy Baseball Pickup Agent",
+      when: "2025",
+      summary:
+        "I never knew which pitcher to pick up in fantasy baseball, so I built something to figure it out. It pulls game-by-game pitcher data from MLB's public API, checks recent form, home and away splits and how the opponent hits, then tells me who to pick up.",
+      stack: ["Python", "Pandas", "MLB API"],
+      visual: "fantasy",
     },
   ],
 
   /* ------------------------------------------------------------------------
-     04 / TOOLKIT: each skill links to where it was used (ids from above).
+     04 / SKILLS
      ------------------------------------------------------------------------ */
   skills: [
-    {
-      group: "Sales Engineering",
-      items: [
-        { name: "Discovery & Qualification", used: ["exp-cisco", "exp-flashbang"] },
-        { name: "Consultative Selling", used: ["exp-flashbang", "exp-granitebay"] },
-        { name: "Value Messaging", used: ["exp-cisco", "project-cisco-ai"] },
-        { name: "Objection Handling", used: ["exp-flashbang"] },
-      ],
-    },
-    {
-      group: "Technical",
-      items: [
-        { name: "Python", used: ["project-mlb", "project-outreach"] },
-        { name: "SQL", used: ["project-mlb"] },
-        { name: "REST APIs", used: ["project-mlb", "project-outreach"] },
-        { name: "Data Pipelines (ETL)", used: ["project-mlb"] },
-        { name: "Data Analysis", used: ["project-mlb"] },
-        { name: "Relational Databases", used: ["project-mlb"] },
-      ],
-    },
-    {
-      group: "AI & Cloud",
-      items: [
-        { name: "Generative AI (Gemini)", used: ["project-outreach"] },
-        { name: "Workflow Automation (Make.com)", used: ["project-outreach"] },
-        { name: "AWS Cloud Fundamentals", used: ["exp-aws"] },
-        { name: "AI Infrastructure", used: ["project-cisco-ai", "exp-cisco"] },
-      ],
-    },
-    {
-      group: "Tools & Docs",
-      items: [
-        { name: "Git", used: ["project-cisco-ai", "github"] },
-        { name: "Markdown", used: ["project-cisco-ai"] },
-        { name: "CLI / Terminal", used: ["terminal"] },
-        { name: "Enablement Writing", used: ["exp-cisco"] },
-        { name: "Playbooks", used: ["exp-flashbang"] },
-        { name: "Process Mapping", used: ["project-outreach", "exp-flashbang"] },
-      ],
-    },
-    {
-      group: "Communication",
-      items: [
-        { name: "Public Speaking", used: ["project-cisco-ai", "exp-aws"] },
-        { name: "Live Presentations", used: ["exp-flashbang", "exp-aws"] },
-        { name: "Executive-Friendly Summaries", used: ["exp-cisco", "project-mlb"] },
-        { name: "Cross-Functional Collaboration", used: ["exp-cisco", "exp-flashbang"] },
-      ],
-    },
+    { group: "Sales", items: ["Discovery & qualification", "Consultative selling", "Value messaging", "Objection handling", "Live demos"] },
+    { group: "Technical", items: ["Python", "SQL", "REST APIs", "Data pipelines (ETL)", "Pandas", "HTML & JavaScript", "Git"] },
+    { group: "AI & cloud", items: ["Claude (custom skills)", "Gemini", "Make.com", "Sora", "AWS fundamentals"] },
+    { group: "Communication", items: ["Public speaking", "Executive summaries", "Enablement writing", "Cross-functional teamwork"] },
   ],
-
-  // Extra entries the Toolkit can point to that aren't jobs or projects.
-  extraEvidence: {
-    github: { title: "GitHub", detail: "This site and my projects live on GitHub. See the live feed below.", href: "#github" },
-    terminal: { title: "This site's terminal", detail: "Press ` (backtick) or the >_ button to drive the site from a command line.", href: "#", action: "terminal" },
-  },
-
-  /* ------------------------------------------------------------------------
-     05 / GITHUB: pulled live from the public GitHub API in the browser.
-     ------------------------------------------------------------------------ */
-  github: {
-    // Repos to show first, in this order.
-    featured: ["cisco-ai-infrastructure"],
-    // Repos to leave out (this site's own repo, practice repos, etc.).
-    hidden: ["ethan_okelberry_personal_website", "okelberrye-cloud.github.io"],
-    maxRepos: 6,
-    includeForks: false,
-    // Fallback descriptions for repos that don't have one on GitHub.
-    descriptions: {
-      "cisco-ai-infrastructure": "Interactive 10-minute explainer deck on Cisco AI infrastructure, with a live GPU-network simulation.",
-    },
-  },
 };

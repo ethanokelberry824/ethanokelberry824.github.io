@@ -2,32 +2,26 @@
 
 **Live site:** https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/
 
-A personal site for Sales Engineering and Solutions Consulting roles, built around one idea: *technical enough to build it, clear enough to sell it.*
+A personal site for Sales Engineering and Solutions Consulting roles, built around one idea: *I build it. I sell it.*
 
 ## What's on it
 
 | Section | What it does |
 | --- | --- |
-| **Technical / Business switch** | Every project is written two ways. Flipping the switch in the nav rewrites the copy, the demo logs and the accent color for an engineer or an executive. |
-| **01 Discovery** | A recruiter picks what the role needs; the site builds a fit report with evidence, a copyable summary and a pre-filled email. |
-| **02 Experience** | Timeline of roles and education. |
-| **03 Demos** | Working demos: a GPU-cluster network simulation (from the Cisco AI Infrastructure deck), plus simulated runs of the outreach agent and the MLB analytics pipeline. |
-| **04 Toolkit** | Click any skill to get a "receipt" showing where it was used. |
-| **05 GitHub** | Profile, languages, recent activity and repos, pulled live from the GitHub API. |
-| **06 Contact** | Email (with copy button), LinkedIn, GitHub, resume download and a recruiter TL;DR. |
-| **Terminal** | Press <kbd>`</kbd> (backtick) to drive the site from a command line. Try `help`, `whoami`, `projects`, `hire`. |
-
-Also included: light and dark themes, a mobile layout, reduced-motion support, a social preview image (`og-image.png`) and self-hosted fonts.
+| **Hero** | Name, headline, phone, resume download, plus Cisco and AWS logos and the startup numbers. |
+| **01 Discovery** | A recruiter picks what the role needs and gets proof, a copyable summary and a pre-filled email. |
+| **02 Experience** | Cisco, AWS, Flash Bang Authentics, Granite Bay, plus education. |
+| **03 Projects** | Cisco AI Infrastructure presentation (links to the live deck), plus demos of the outreach agent and the fantasy baseball pickup agent. |
+| **04 Skills** | A plain list by category. |
+| **05 Contact** | Phone, email (with copy button), LinkedIn, resume and a recruiter TL;DR. |
 
 ## Editing the content
 
 **All text lives in [`js/content.js`](js/content.js).** Edit it, commit and push; the site updates in about a minute. There's no build step.
 
 - New job: add an entry to `experience`.
-- New project: add an entry to `projects`. `demo` can be `"gpu"`, `"outreach"`, `"mlb"` or left out.
-- New skill: add it under `skills` with `used: [...]` pointing at experience or project ids.
-- Feature a repo: put its name in `github.featured`. Hide one with `github.hidden`.
-- Add a scheduling link: set `bookingUrl` to show a "Book a 15-min call" button.
+- New project: add an entry to `projects`. `visual` can be `"outline"` (numbered list), `"outreach"` or `"fantasy"`.
+- New skill: add it to the right group under `skills`.
 - Swap the resume: replace `assets/Ethan_Okelberry_Resume.pdf` (keep the file name, or update `resume`).
 - Swap the headshot: replace `assets/headshot-800.jpg`, `headshot-800.webp` and `headshot-480.webp` (4:5 portrait).
 
@@ -53,9 +47,8 @@ index.html        page skeleton, SEO and social tags
 css/style.css     all styles (themes, layout, responsive)
 js/content.js     all resume content  <- edit this
 js/main.js        rendering and interactions
-js/demos.js       interactive project demos
-js/github.js      live GitHub feed (cached 1h in the browser)
-js/terminal.js    the backtick terminal
+js/demos.js       agent demos (sample data)
+js/logos.js       Cisco and AWS logos
 assets/           headshot, resume PDF, fonts
 og-image.png      link preview image (1200x630)
 404.html          custom not-found page

@@ -5,6 +5,7 @@
   "use strict";
 
   var S = window.SITE;
+  var LOGOS = window.LOGOS || {};
   var root = document.documentElement;
 
   /* ---- helpers ---------------------------------------------------------- */
@@ -15,7 +16,6 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
-  function bi(o) { return '<span class="t">' + esc(o.tech) + '</span><span class="b">' + esc(o.biz) + "</span>"; }
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function reducedMotion() { return window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches; }
   function cssVar(n) { return getComputedStyle(root).getPropertyValue(n).trim(); }
@@ -23,14 +23,19 @@
   var I = {
     download: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>',
     arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>',
+    external: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
     mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
     linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5v.01M12 17v-3.8c0-1.6 1-2.7 2.4-2.7s2.1 1 2.1 2.6V17M12 10.5V17"/></svg>',
     github: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
-    calendar: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
     copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
     check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>',
-    code: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>',
   };
+
+  function logoOrMark(item) {
+    if (item.logo && LOGOS[item.logo]) return '<span class="logo logo-' + esc(item.logo) + '">' + LOGOS[item.logo] + "</span>";
+    return '<span class="mark" style="--co:' + esc(item.color || "#888") + '">' + esc(item.mark || "") + "</span>";
+  }
 
   /* ---- toast & clipboard ------------------------------------------------ */
   var toastTimer;
@@ -60,29 +65,11 @@
     }
   }
 
-  /* ---- audience + theme ------------------------------------------------- */
-  function syncModeButtons() {
-    var m = root.getAttribute("data-mode");
-    $$("[data-set-mode]").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-set-mode") === m));
-    });
-  }
-  function setMode(m, announce) {
-    if (root.getAttribute("data-mode") === m) return;
-    root.setAttribute("data-mode", m);
-    store("eo-mode", m);
-    syncModeButtons();
-    if (announce) toast(m === "tech" ? "Explaining everything for engineers" : "Explaining everything for the business side");
-  }
   function setTheme(t) {
     root.setAttribute("data-theme", t);
     store("eo-theme", t);
     var meta = $('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", t === "light" ? "#f5f7fb" : "#07090f");
-  }
-  function scrollToHash(hash) {
-    var el = $(hash);
-    if (el) el.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
   }
 
   /* ---- hero ------------------------------------------------------------- */
@@ -92,40 +79,41 @@
     var cut = S.headline.indexOf(". ");
     $("#heroHeadline").innerHTML = cut === -1 ? esc(S.headline)
       : esc(S.headline.slice(0, cut + 1)) + ' <span class="hl">' + esc(S.headline.slice(cut + 2)) + "</span>";
-    $("#heroSummary").innerHTML = bi(S.summary);
+    $("#heroSummary").textContent = S.summary;
 
-    var ctas =
+    $("#heroCtas").innerHTML =
       '<a class="btn btn-primary" href="' + esc(S.resume) + '" download>' + I.download + "Download resume</a>" +
-      '<a class="btn" href="#contact">Let\'s talk' + I.arrow + "</a>" +
-      '<a class="btn btn-social" href="https://github.com/' + esc(S.githubUser) + '" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">' + I.github + '<span class="lbl">GitHub</span></a>' +
+      '<a class="btn" href="tel:' + esc(S.phoneHref) + '">' + I.phone + esc(S.phone) + "</a>" +
+      '<a class="btn btn-social" href="mailto:' + esc(S.email) + '" aria-label="Email" title="Email">' + I.mail + '<span class="lbl">Email</span></a>' +
       '<a class="btn btn-social" href="' + esc(S.linkedin) + '" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">' + I.linkedin + '<span class="lbl">LinkedIn</span></a>';
-    $("#heroCtas").innerHTML = ctas;
 
-    $("#heroBadges").innerHTML = S.heroBadges.map(function (b) {
-      return "<li><b>" + esc(b.label) + "</b><span>" + esc(b.value) + "</span></li>";
+    $("#creds").innerHTML = S.credentials.map(function (c) {
+      return '<div class="cred">' + logoOrMark(c) + '<span class="cred-text"><b>' + esc(c.title) + "</b><small>" + esc(c.note) + "</small></span></div>";
     }).join("");
 
-    $("#stats").innerHTML = S.stats.map(function (s) {
-      return "<div><dt>" + esc(s.label) + '</dt><dd data-count="' + s.value + '" data-prefix="' + esc(s.prefix || "") + '" data-suffix="' + esc(s.suffix || "") + '">' +
-        esc(s.prefix || "") + s.value + '<span class="sfx">' + esc(s.suffix || "") + "</span></dd></div>";
+    $("#startupLabel").textContent = S.startup.label;
+    $("#stats").innerHTML = S.startup.stats.map(function (s) {
+      return "<div><dt>" + esc(s.label) + '</dt><dd data-count="' + s.value + '" data-suffix="' + esc(s.suffix || "") + '">' +
+        s.value + '<span class="sfx">' + esc(s.suffix || "") + "</span></dd></div>";
     }).join("");
   }
 
   function countUp() {
     var els = $$("#stats dd");
     if (reducedMotion() || !("IntersectionObserver" in window)) return;
-    els.forEach(function (el) {
-      el.innerHTML = esc(el.dataset.prefix) + "0" + '<span class="sfx">' + esc(el.dataset.suffix) + "</span>";
-    });
+    function paint(e) {
+      els.forEach(function (el) {
+        el.innerHTML = Math.round(+el.dataset.count * e) + '<span class="sfx">' + esc(el.dataset.suffix) + "</span>";
+      });
+    }
+    paint(0);
     var io = new IntersectionObserver(function (entries) {
       if (!entries[0].isIntersecting) return;
       io.disconnect();
       var t0 = performance.now();
       (function step(now) {
-        var p = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - p, 3);
-        els.forEach(function (el) {
-          el.innerHTML = esc(el.dataset.prefix) + Math.round(+el.dataset.count * e) + '<span class="sfx">' + esc(el.dataset.suffix) + "</span>";
-        });
+        var p = Math.min(1, (now - t0) / 1400);
+        paint(1 - Math.pow(1 - p, 3));
         if (p < 1) requestAnimationFrame(step);
       })(t0);
     }, { threshold: 0.4 });
@@ -179,9 +167,9 @@
     function draw(move) {
       ctx.clearRect(0, 0, W, H);
       var i, j, a, b, dx, dy, d;
-      for (i = 0; i < nodes.length; i++) {
-        a = nodes[i];
-        if (move) {
+      if (move) {
+        for (i = 0; i < nodes.length; i++) {
+          a = nodes[i];
           dx = a.x - mouse.x; dy = a.y - mouse.y; d = Math.hypot(dx, dy);
           if (d < 140 && d > 0.1) { a.vx += (dx / d) * 0.015; a.vy += (dy / d) * 0.015; }
           a.vx *= 0.995; a.vy *= 0.995;
@@ -209,9 +197,9 @@
         }
       }
       ctx.fillStyle = accent;
+      ctx.globalAlpha = 0.65;
       for (i = 0; i < nodes.length; i++) {
         a = nodes[i];
-        ctx.globalAlpha = 0.65;
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
@@ -228,7 +216,7 @@
     });
     $(".hero").addEventListener("pointerleave", function () { mouse.x = mouse.y = -9999; });
     new MutationObserver(function () { colors(); if (!running) draw(false); })
-      .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
+      .observe(root, { attributes: true, attributeFilter: ["data-theme"] });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (en) { en[0].isIntersecting ? start() : stop(); }).observe(c);
     } else start();
@@ -251,7 +239,7 @@
   }
 
   /* ---- 01 discovery ----------------------------------------------------- */
-  var selectedNeeds = ["demo", "translate", "sell"];
+  var selectedNeeds = (S.defaultNeeds || []).slice();
 
   function renderNeeds() {
     $("#needs").innerHTML = S.needs.map(function (n) {
@@ -281,6 +269,7 @@
       lines.push("");
     });
     lines.push("Portfolio: " + location.href.split("#")[0]);
+    lines.push("Phone: " + S.phone);
     lines.push("Email: " + S.email);
     lines.push("LinkedIn: " + S.linkedin);
     return lines.join("\n");
@@ -289,13 +278,13 @@
   function renderFit() {
     var box = $("#fitReport"), needs = chosenNeeds();
     if (!needs.length) {
-      box.innerHTML = '<div class="fit-empty"><p>Pick one or more requirements on the left<br>to generate a fit report.</p></div>';
+      box.innerHTML = '<div class="fit-empty"><p>Pick one or more on the left<br>to see the proof.</p></div>';
       return;
     }
     var proof = needs.reduce(function (s, n) { return s + n.evidence.length; }, 0);
     box.innerHTML =
       '<div class="fit-head"><div><p class="mini-label">Fit report</p><p class="fit-title">' +
-      (needs.length === 1 ? "Your requirement is" : "All " + needs.length + " requirements are") + " backed by real experience.</p></div>" +
+      (needs.length === 1 ? "Here's where I've done it." : "All " + needs.length + " are backed by real experience.") + "</p></div>" +
       '<p class="fit-score"><strong>' + proof + "</strong>proof points</p></div>" +
       '<div class="fit-meter" aria-hidden="true">' + needs.map(function () { return "<i></i>"; }).join("") + "</div>" +
       needs.map(function (n) {
@@ -309,9 +298,8 @@
       '<button type="button" class="btn btn-sm" data-act="copy-fit">' + I.copy + "Copy summary</button>" +
       '<a class="btn btn-sm btn-primary" href="mailto:' + esc(S.email) + "?subject=" + encodeURIComponent("Role fit: " + needs.map(function (n) { return n.label; }).join(", ")) +
       "&body=" + encodeURIComponent("Hi Ethan,\n\nI'm hiring for a role that needs someone who:\n" + needs.map(function (n) { return "- " + n.label.toLowerCase(); }).join("\n") + "\n\n") +
-      '">' + I.mail + "Email Ethan about this role</a></div>";
+      '">' + I.mail + "Email me about this role</a></div>";
 
-    // light up the meter one segment at a time
     $$(".fit-meter i", box).forEach(function (el, i) {
       setTimeout(function () { el.classList.add("on"); }, 80 + i * 110);
     });
@@ -321,112 +309,82 @@
   function renderExperience() {
     var html = S.experience.map(function (j) {
       var now = /present/i.test(j.dates);
+      var stats = j.stats ? '<div class="job-stats">' + j.stats.map(function (s) {
+        return "<span><b>" + esc(s.value) + "</b>" + esc(s.label) + "</span>";
+      }).join("") + "</div>" : "";
       return '<article class="job reveal" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
-        '<div class="job-mark" aria-hidden="true">' + esc(j.mark) + "</div>" +
-        '<div class="card"><div class="job-top"><div><h3 class="job-role">' + esc(j.role) + '</h3><p class="job-co"><i></i>' + esc(j.company) + "</p></div>" +
+        '<div class="job-mark' + (j.logo ? " has-logo" : "") + '" aria-hidden="true">' + logoOrMark(j) + "</div>" +
+        '<div class="card"><div class="job-top"><div><h3 class="job-role">' + esc(j.role) + '</h3><p class="job-co"><i></i>' + esc(j.company) +
+        (j.companyNote ? '<span class="job-note">' + esc(j.companyNote) + "</span>" : "") + "</p></div>" +
         '<p class="job-when">' + esc(j.dates) + (now ? '<span class="job-now">Now</span>' : "") + "<br>" + esc(j.location) + "</p></div>" +
+        stats +
         "<ul>" + j.bullets.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul>" +
-        '<div class="tags">' + j.tags.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("") + "</div>" +
         "</div></article>";
     }).join("");
     $("#timeline").insertAdjacentHTML("beforeend", html);
 
     $("#eduGrid").innerHTML = S.education.map(function (e) {
-      return '<div class="card edu reveal"><h4>' + esc(e.school) + "</h4><p>" + esc(e.degree) + '</p><p class="when">' + esc(e.dates) + " · " + esc(e.location) + "</p></div>";
+      return '<div class="card edu reveal' + (e.main ? " edu-main" : "") + '"><h4>' + esc(e.school) + "</h4><p>" + esc(e.degree) + "</p>" +
+        (e.detail ? '<p class="edu-detail">' + esc(e.detail) + "</p>" : "") +
+        '<p class="when">' + esc(e.dates) + " · " + esc(e.location) + "</p></div>";
     }).join("");
+    $("#eduNote").textContent = S.educationNote || "";
   }
 
   /* ---- 03 projects ------------------------------------------------------ */
   function renderProjects() {
-    var wrap = $("#projects");
+    var wrap = $("#projectList");
     wrap.innerHTML = S.projects.map(function (p) {
-      var checks = function (list) { return list.map(function (x) { return "<li>" + I.check + "<span>" + esc(x) + "</span></li>"; }).join(""); };
-      var links = p.repo
-        ? '<a class="btn btn-sm" href="https://github.com/' + esc(S.githubUser) + "/" + esc(p.repo) + '" target="_blank" rel="noopener">' + I.github + "View the code</a>"
+      var link = p.link ? '<div class="project-links"><a class="btn btn-sm btn-primary" href="' + esc(p.link.href) + '" target="_blank" rel="noopener">' + esc(p.link.label) + I.external + "</a></div>" : "";
+      var visual = p.visual === "outline"
+        ? '<div class="outline"><p class="mini-label">' + esc(p.outlineTitle) + '</p><ol>' +
+          p.outline.map(function (o, i) { return '<li><span class="num">' + (i + 1) + "</span><span>" + esc(o) + "</span></li>"; }).join("") + "</ol></div>"
         : "";
-      if (p.live) links += '<a class="btn btn-sm" href="' + esc(p.live) + '" target="_blank" rel="noopener">' + I.arrow + "Open the full version</a>";
       return '<article class="card project reveal" id="' + esc(p.id) + '">' +
         '<div class="project-info"><p class="project-when">' + esc(p.when) + '</p><h3 class="project-title">' + esc(p.title) + "</h3>" +
-        '<p class="project-summary">' + bi(p.summary) + "</p>" +
-        '<ul class="checks t">' + checks(p.points.tech) + '</ul><ul class="checks b">' + checks(p.points.biz) + "</ul>" +
+        '<p class="project-summary">' + esc(p.summary) + "</p>" +
         '<div class="tags">' + p.stack.map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") + "</div>" +
-        (links ? '<div class="project-links">' + links + "</div>" : "") +
-        "</div>" +
-        '<div class="demo" data-demo="' + esc(p.demo) + '"></div></article>';
+        link + "</div>" +
+        '<div class="demo" data-visual="' + esc(p.visual) + '">' + visual + "</div></article>";
     }).join("");
     $$(".demo", wrap).forEach(function (el) {
-      if (window.Demos) window.Demos.mount(el.getAttribute("data-demo"), el);
+      var v = el.getAttribute("data-visual");
+      if (v !== "outline" && window.Demos) window.Demos.mount(v, el);
     });
   }
 
-  /* ---- 04 toolkit ------------------------------------------------------- */
-  function evidenceFor(id) {
-    var j = S.experience.filter(function (x) { return x.id === id; })[0];
-    if (j) return { title: j.role + " · " + j.company, detail: esc(j.bullets[0]), href: "#" + j.id };
-    var p = S.projects.filter(function (x) { return x.id === id; })[0];
-    if (p) return { title: p.title, detail: bi({ tech: p.points.tech.join(" · "), biz: p.points.biz.join(" · ") }), href: "#" + p.id };
-    var x = S.extraEvidence[id];
-    if (x) return { title: x.title, detail: esc(x.detail), href: x.href, action: x.action };
-    return null;
-  }
-
-  function renderToolkit() {
-    $("#skillGroups").innerHTML = S.skills.map(function (g, gi) {
-      return '<div class="skill-group reveal"><h3>' + esc(g.group) + '</h3><div class="chips">' +
-        g.items.map(function (s, si) {
-          return '<button type="button" class="chip" data-skill="' + gi + "-" + si + '" aria-pressed="false">' + esc(s.name) + "</button>";
-        }).join("") + "</div></div>";
+  /* ---- 04 skills -------------------------------------------------------- */
+  function renderSkills() {
+    $("#skillList").innerHTML = S.skills.map(function (g) {
+      return '<div class="skill-row"><h3>' + esc(g.group) + '</h3><div class="tags">' +
+        g.items.map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") + "</div></div>";
     }).join("");
-
-    function select(key) {
-      $$(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c.getAttribute("data-skill") === key)); });
-      var k = key.split("-"), g = S.skills[+k[0]], s = g.items[+k[1]];
-      var items = s.used.map(evidenceFor).filter(Boolean);
-      $("#receipt").innerHTML =
-        '<div class="receipt-top"><span>Receipt · ' + esc(g.group) + "</span><b>" + esc(s.name) + "</b><span>Proof of use</span></div>" +
-        '<ul class="receipt-items">' + items.map(function (it) {
-          var attr = it.action ? ' data-action="' + esc(it.action) + '"' : "";
-          return '<li><div class="receipt-row"><span>' + esc(it.title) + '</span><a href="' + esc(it.href) + '"' + attr + ">view →</a></div><p>" + it.detail + "</p></li>";
-        }).join("") + "</ul>" +
-        '<div class="receipt-total"><span>USED IN</span><span>' + items.length + (items.length === 1 ? " place" : " places") + "</span></div>";
-    }
-
-    $("#skillGroups").addEventListener("click", function (e) {
-      var b = e.target.closest(".chip");
-      if (b) select(b.getAttribute("data-skill"));
-    });
-    $("#receipt").addEventListener("click", function (e) {
-      var a = e.target.closest('[data-action="terminal"]');
-      if (a) { e.preventDefault(); if (window.App.terminal) window.App.terminal.open(); }
-    });
-
-    // Start on Python
-    var start = "0-0";
-    S.skills.forEach(function (g, gi) { g.items.forEach(function (s, si) { if (s.name === "Python") start = gi + "-" + si; }); });
-    select(start);
   }
 
-  /* ---- 06 contact ------------------------------------------------------- */
+  /* ---- 05 contact ------------------------------------------------------- */
   function renderContact() {
-    var html =
+    $("#contactActions").innerHTML =
+      '<a class="btn btn-primary" href="tel:' + esc(S.phoneHref) + '">' + I.phone + esc(S.phone) + "</a>" +
       '<div class="email-pill"><a href="mailto:' + esc(S.email) + '">' + I.mail + esc(S.email) + "</a>" +
       '<button type="button" data-act="copy-email" aria-label="Copy email address">Copy</button></div>' +
       '<a class="btn" href="' + esc(S.linkedin) + '" target="_blank" rel="noopener">' + I.linkedin + "LinkedIn</a>" +
-      '<a class="btn" href="https://github.com/' + esc(S.githubUser) + '" target="_blank" rel="noopener">' + I.github + "GitHub</a>" +
-      '<a class="btn" href="' + esc(S.resume) + '" download>' + I.download + "Resume</a>";
-    if (S.bookingUrl) html = '<a class="btn btn-primary" href="' + esc(S.bookingUrl) + '" target="_blank" rel="noopener">' + I.calendar + "Book a 15-min call</a>" + html;
-    $("#contactActions").innerHTML = html;
+      '<a class="btn" href="' + esc(S.resume) + '" download>' + I.download + "Resume</a>" +
+      '<a class="btn btn-social" href="https://github.com/' + esc(S.githubUser) + '" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">' + I.github + "</a>";
 
     var rows = [
       ["Targeting", "Sales Engineering · Solutions Consulting"],
       ["Graduating", "B.S. Computer Science, CSUSM · May 2027"],
       ["Based in", S.location],
       ["Recent", "Cisco Technical Sales Engineering Intern ('26) · AWS Student Builder Campus Leader"],
-      ["Proof", "2× quota in live sales · 500+ viewer live streams · Builds AI automations"],
+      ["Proof", "2× quota and 500+ viewer live streams at a live commerce startup"],
     ];
     $("#tldr").innerHTML = rows.map(function (r) {
       return "<div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>";
-    }).join("") + '<div><dt>Contact</dt><dd><a href="mailto:' + esc(S.email) + '">' + esc(S.email) + "</a></dd></div>";
+    }).join("") +
+      '<div><dt>Phone</dt><dd><a href="tel:' + esc(S.phoneHref) + '">' + esc(S.phone) + "</a></dd></div>" +
+      '<div><dt>Email</dt><dd><a href="mailto:' + esc(S.email) + '">' + esc(S.email) + "</a></dd></div>";
+
+    $("#footerContact").innerHTML = '<a href="tel:' + esc(S.phoneHref) + '">' + esc(S.phone) + '</a> · <a href="mailto:' + esc(S.email) + '">' + esc(S.email) + "</a>";
   }
 
   /* ---- nav, progress, section rail -------------------------------------- */
@@ -471,7 +429,6 @@
     window.addEventListener("resize", update);
     update();
 
-    // mobile menu
     var menuBtn = $("#menuBtn"), menu = $("#navLinks");
     function setMenu(open) {
       menu.classList.toggle("open", open);
@@ -517,27 +474,17 @@
     renderNeeds();
     renderExperience();
     renderProjects();
-    renderToolkit();
+    renderSkills();
     renderContact();
-    syncModeButtons();
     $("#year").textContent = new Date().getFullYear();
 
     document.addEventListener("click", function (e) {
-      var m = e.target.closest("[data-set-mode]");
-      if (m) setMode(m.getAttribute("data-set-mode"), true);
       if (e.target.closest('[data-act="copy-email"]')) copy(S.email, "Email copied");
       if (e.target.closest('[data-act="copy-fit"]')) copy(fitSummaryText(), "Fit summary copied");
     });
     $("#themeBtn").addEventListener("click", function () {
       setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
     });
-
-    window.App = { setMode: setMode, setTheme: setTheme, scrollTo: scrollToHash, toast: toast };
-    if (window.Terminal) {
-      window.App.terminal = window.Terminal.init(S, window.App);
-      $("#termBtn").addEventListener("click", function () { window.App.terminal.open(); });
-    }
-    if (window.GitHubFeed) window.GitHubFeed.init($("#ghRoot"), S);
 
     navigation();
     reveals();
