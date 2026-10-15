@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found · Ethan Okelberry</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root { --bg: #07090f; --text: #e8ecf3; --muted: #7d889c; --accent: #4cc9f0; --line: rgba(148, 163, 184, .2); color-scheme: dark; }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f5f7fb; --text: #0b1220; --muted: #5b6577; --accent: #0369a1; --line: rgba(15, 23, 42, .15); color-scheme: light; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; background: var(--bg); color: var(--text); font: 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    main { width: min(560px, 100%); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+    .ps1 { color: var(--accent); }
+    h1 { font: 700 64px/1 system-ui, sans-serif; margin: 18px 0 8px; letter-spacing: -.04em; }
+    p { margin: 0 0 8px; color: var(--muted); }
+    a { color: var(--accent); }
+    .err { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><span class="ps1">ethan@portfolio:~$</span> cd <span id="path">/this-page</span></p>
+    <p class="err">cd: no such file or directory</p>
+    <h1>404</h1>
+    <p>This page didn't make it past discovery.</p>
+    <p><a href="/Ethan_Okelberry_Personal_Website/">&larr; Back to the portfolio</a></p>
+  </main>
+  <script>
+    document.getElementById("path").textContent = location.pathname.replace(/^\/Ethan_Okelberry_Personal_Website/i, "") || "/";
+  </script>
+</body>
+</html>
