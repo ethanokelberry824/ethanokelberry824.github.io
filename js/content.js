@@ -89,7 +89,7 @@ window.SITE = {
         { src: "Outreach Agent", text: "Connected the Hunter.io API, Gemini and Gmail into a 7-module automated pipeline.", href: "#project-outreach" },
         { src: "Pickup Agent", text: "Built an agent that looks up each pitcher's projected stat line, checks my league's rosters and emails me the best pickups.", href: "#project-fantasy" },
         { src: "Cisco", text: "Built the AI Infrastructure presentation from scratch in HTML and JavaScript, including a live GPU network simulation.", href: "#project-cisco-ai" },
-        { src: "Education", text: "B.S. in Computer Science at CSUSM (May 2027). Ranked in the top 10% of my class at Sierra College.", href: "#education" },
+        { src: "Education", text: "B.S. in Computer Science at CSUSM (May 2027).", href: "#education" },
       ],
     },
     {
@@ -100,7 +100,6 @@ window.SITE = {
         { src: "Gemini", text: "Uses Gemini in my outreach agent to write a personal email for every contact it finds.", href: "#project-outreach" },
         { src: "Make.com", text: "Built a 7-module automation that runs the whole outreach process with no manual steps.", href: "#project-outreach" },
         { src: "Sora", text: "Made AI marketing videos with Sora for Flash Bang Authentics.", href: "#exp-flashbang" },
-        { src: "Cisco", text: "Led an intern capstone on an AI-driven solution, presented to Cisco's Head of AI.", href: "#exp-cisco" },
       ],
     },
     {
@@ -110,7 +109,6 @@ window.SITE = {
         { src: "Flash Bang Authentics", text: "First employee at a startup that grew to 10+ sellers. Led a team of 4.", href: "#exp-flashbang" },
         { src: "AWS", text: "Selected as the AWS Student Builder Campus Leader for Cal State San Marcos.", href: "#exp-aws" },
         { src: "Cisco", text: "Led the intern capstone and presented it to Cisco's Head of AI.", href: "#exp-cisco" },
-        { src: "Sierra College", text: "Treasurer of the Chess Club.", href: "#education" },
       ],
     },
   ],
@@ -147,6 +145,7 @@ window.SITE = {
       bullets: [
         "Selected to represent the AWS Student Builder program at Cal State San Marcos.",
         "Host cloud fundamentals workshops and get students started on AWS Builder Center, AWS services and certifications.",
+        "Tasked with reaching a goal of 500 student sign-ups through class announcements and social media engagement.",
         "Set up a CSUSM Discord community for students learning to build on AWS.",
       ],
     },
@@ -182,11 +181,15 @@ window.SITE = {
       dates: "May 2022 – May 2025",
       location: "Granite Bay, CA",
       color: "#30a46c",
-      stats: [{ value: "3", label: "years" }],
+      stats: [
+        { value: "400", label: "club members" },
+        { value: "80", label: "golf carts managed" },
+        { value: "3", label: "years" },
+      ],
       bullets: [
-        "Gave high-touch service to club members for three years, building long-term relationships that kept members coming back.",
-        "Supported tournaments and events, handling logistics and fixing problems on the spot.",
-        "Recognized for reliability and professionalism in a fast-paced, customer-facing job.",
+        "Gave high-touch service to about 400 club members for three years, building long-term relationships that kept members coming back.",
+        "Helped onboard new staff and was trusted with opening and closing the club.",
+        "Managed a fleet of 80 golf carts, keeping them clean and ready in a fast-paced environment.",
       ],
     },
   ],
