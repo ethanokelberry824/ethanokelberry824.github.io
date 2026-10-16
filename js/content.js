@@ -104,23 +104,6 @@ window.SITE = {
       ],
     },
     {
-      id: "cloud",
-      label: "Knows cloud & infrastructure",
-      evidence: [
-        { src: "AWS", text: "Hosts cloud fundamentals workshops and gets students started on AWS Builder Center, AWS services and certifications.", href: "#exp-aws" },
-        { src: "Cisco", text: "Broke down a full AI stack for people who have never built one: GPU servers, AI networking, partner storage and validated designs.", href: "#project-cisco-ai" },
-      ],
-    },
-    {
-      id: "enable",
-      label: "Writes enablement & documentation",
-      evidence: [
-        { src: "Cisco", text: "Researched, wrote and structured customer-facing reference docs for a new sales enablement project.", href: "#exp-cisco" },
-        { src: "Flash Bang Authentics", text: "Wrote the stream scripts and offer structure that made closing more consistent across the team.", href: "#exp-flashbang" },
-        { src: "Cisco", text: "Wrote a timed, click-by-click talk track to go with the AI Infrastructure presentation.", href: "#project-cisco-ai" },
-      ],
-    },
-    {
       id: "lead",
       label: "Leads & takes ownership",
       evidence: [
