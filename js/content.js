@@ -74,6 +74,25 @@ window.SITE = {
       ],
     },
     {
+      id: "sell",
+      label: "Handles objections & closes",
+      evidence: [
+        { src: "Flash Bang Authentics", text: "Beat quota by 2× using objection handling and upselling, live on camera.", href: "#exp-flashbang" },
+        { src: "Flash Bang Authentics", text: "Led 4 sellers and wrote the stream scripts and offers that made closing more consistent.", href: "#exp-flashbang" },
+        { src: "Cisco", text: "Shadowed senior Solutions Engineers through real enterprise sales cycles.", href: "#exp-cisco" },
+      ],
+    },
+    {
+      id: "technical",
+      label: "Has hands-on technical depth",
+      evidence: [
+        { src: "Outreach Agent", text: "Connected the Hunter.io API, Gemini and Gmail into a 7-module automated pipeline.", href: "#project-outreach" },
+        { src: "Pickup Agent", text: "Built an agent that looks up each pitcher's projected stat line, checks my league's rosters and emails me the best pickups.", href: "#project-fantasy" },
+        { src: "Cisco", text: "Built the AI Infrastructure presentation from scratch in HTML and JavaScript, including a live GPU network simulation.", href: "#project-cisco-ai" },
+        { src: "Education", text: "B.S. in Computer Science at CSUSM (May 2027). Ranked in the top 10% of my class at Sierra College.", href: "#education" },
+      ],
+    },
+    {
       id: "ai",
       label: "Proficient in AI tools",
       evidence: [
@@ -85,12 +104,30 @@ window.SITE = {
       ],
     },
     {
-      id: "sell",
-      label: "Handles objections & closes",
+      id: "cloud",
+      label: "Knows cloud & infrastructure",
       evidence: [
-        { src: "Flash Bang Authentics", text: "Beat quota by 2× using objection handling and upselling, live on camera.", href: "#exp-flashbang" },
-        { src: "Flash Bang Authentics", text: "Led 4 sellers and wrote the stream scripts and offers that made closing more consistent.", href: "#exp-flashbang" },
-        { src: "Cisco", text: "Shadowed senior Solutions Engineers through real enterprise sales cycles.", href: "#exp-cisco" },
+        { src: "AWS", text: "Hosts cloud fundamentals workshops and gets students started on AWS Builder Center, AWS services and certifications.", href: "#exp-aws" },
+        { src: "Cisco", text: "Broke down a full AI stack for people who have never built one: GPU servers, AI networking, partner storage and validated designs.", href: "#project-cisco-ai" },
+      ],
+    },
+    {
+      id: "enable",
+      label: "Writes enablement & documentation",
+      evidence: [
+        { src: "Cisco", text: "Researched, wrote and structured customer-facing reference docs for a new sales enablement project.", href: "#exp-cisco" },
+        { src: "Flash Bang Authentics", text: "Wrote the stream scripts and offer structure that made closing more consistent across the team.", href: "#exp-flashbang" },
+        { src: "Cisco", text: "Wrote a timed, click-by-click talk track to go with the AI Infrastructure presentation.", href: "#project-cisco-ai" },
+      ],
+    },
+    {
+      id: "lead",
+      label: "Leads & takes ownership",
+      evidence: [
+        { src: "Flash Bang Authentics", text: "First employee at a startup that grew to 10+ sellers. Led a team of 4.", href: "#exp-flashbang" },
+        { src: "AWS", text: "Selected as the AWS Student Builder Campus Leader for Cal State San Marcos.", href: "#exp-aws" },
+        { src: "Cisco", text: "Led the intern capstone and presented it to Cisco's Head of AI.", href: "#exp-cisco" },
+        { src: "Sierra College", text: "Treasurer of the Chess Club.", href: "#education" },
       ],
     },
   ],
