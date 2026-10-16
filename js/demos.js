@@ -193,13 +193,13 @@
       '<div class="ptable" role="table" aria-label="Projected pitcher stat lines"><div class="prow phead" role="row"><span>Pitcher</span><span>IP</span><span>K</span><span>ER</span><span>Pts</span><span></span></div></div></li>' +
       '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Check who\'s rostered in my league</b><span class="step-s"></span></div></li>' +
       '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Email me the top options</b><span class="step-s"></span></div>' +
-      '<div class="pmail"><div class="pmail-head"><span class="env">' + PLANE + '</span><span class="out-to"><b>Today\'s top pickups</b><small>From: Pickup Agent · To: Ethan</small></span><span class="out-state"></span></div><ol class="picks"></ol></div></li>' +
+      '<div class="pmail"><div class="pmail-head"><span class="env">' + PLANE + '</span><span class="out-to"><b class="mail-subj"></b><small>From: Pickup Agent · To: Ethan</small></span><span class="out-state"></span></div><div class="mail-body"></div></div></li>' +
       "</ol></div>";
 
     var btn = root.querySelector('[data-act="run"]');
     var steps = root.querySelectorAll(".app-step");
     var table = root.querySelector(".ptable");
-    var picks = root.querySelector(".picks");
+    var mailBody = root.querySelector(".mail-body");
     var pmail = root.querySelector(".pmail");
     var cancel = function () {};
 
@@ -214,7 +214,7 @@
       steps.forEach(function (s) { s.classList.remove("on", "done"); s.querySelector(".step-s").innerHTML = ""; });
       table.querySelectorAll(".prow:not(.phead)").forEach(function (r) { r.remove(); });
       table.classList.remove("filled");
-      picks.innerHTML = "";
+      mailBody.innerHTML = "";
       pmail.classList.remove("show", "sent");
       pmail.querySelector(".out-state").innerHTML = "";
       btn.disabled = false;
@@ -248,21 +248,33 @@
           r.querySelector(".pstate").innerHTML = p[6] ? '<span class="tag-taken">Rostered</span>' : '<span class="tag-sent">' + CHECK + "Available</span>";
         }]);
       });
+      var best = available[0], others = available.slice(1, 4);
+      function line(html, cls) {
+        return function () {
+          var el = document.createElement(cls === "list" ? "ol" : "div");
+          el.className = "mail-line " + (cls || "");
+          el.innerHTML = html;
+          mailBody.appendChild(el);
+        };
+      }
       plan.push([450, function () {
         status(1, available.length + " still available", true);
         status(2, "Writing the email…");
+        pmail.querySelector(".mail-subj").textContent = "Your pickup for today: " + best[0];
         pmail.classList.add("show");
       }]);
-      available.slice(0, 3).forEach(function (p, k) {
-        plan.push([450, function () {
-          var li = document.createElement("li");
-          li.className = k === 0 ? "best" : "";
-          li.innerHTML = '<span class="rank">' + (k + 1) + '</span><span class="pname"><b>' + esc(p[0]) + "</b><small>" + esc(p[1]) + " · " +
-            p[2] + " IP, " + p[3] + " K, " + p[4] + ' ER</small></span><span class="pick-pts"><b>' + p[5].toFixed(1) + "</b> pts</span>" +
-            (k === 0 ? '<span class="pick-tag">Pick up</span>' : "");
-          picks.appendChild(li);
-        }]);
-      });
+      plan.push([400, line("Hey Ethan,")]);
+      plan.push([450, line("Today you should pick up <b>" + esc(best[0]) + "</b>. He's pitching " + esc(best[1]) +
+        " and he's still available in your league. Here's his projected stat line:")]);
+      plan.push([450, line(
+        '<span><small>IP</small><b>' + best[2] + "</b></span><span><small>K</small><b>" + best[3] +
+        "</b></span><span><small>ER</small><b>" + best[4] + '</b></span><span class="statline-pts"><small><i class="hide-sm">Fantasy </i>pts</small><b>' + best[5].toFixed(1) + "</b></span>",
+        "statline")]);
+      plan.push([450, line("If he gets picked up first, here are your other options:")]);
+      plan.push([450, line(others.map(function (p) {
+        return "<li><b>" + esc(p[0]) + "</b> " + esc(p[1]) + '<span class="mail-dim"> · ' + p[2] + " IP, " + p[3] + " K, " + p[4] + " ER · </span><b>" + p[5].toFixed(1) + " pts</b></li>";
+      }).join(""), "list")]);
+      plan.push([400, line("Good luck today,<br>Pickup Agent", "sign")]);
       plan.push([500, function () {
         status(2, "Sending…");
         pmail.querySelector(".out-state").textContent = "Sending…";

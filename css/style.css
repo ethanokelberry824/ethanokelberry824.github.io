@@ -994,7 +994,21 @@ kbd {
 .pmail-head { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .pmail:not(.sent) .env svg { animation: fly .55s ease-in infinite; }
 .pmail.sent .env { background: color-mix(in srgb, var(--good) 15%, transparent); color: var(--good); }
-.pmail .picks { margin-top: 10px; }
+.mail-subj { font-size: 14.5px; }
+.mail-body { padding: 14px 4px 4px; font-size: 14px; line-height: 1.6; color: var(--text-2); }
+.mail-line { animation: swap-in .35s var(--ease); }
+.mail-line + .mail-line { margin-top: 10px; }
+.mail-line b { color: var(--text); font-weight: 600; }
+.mail-line.statline { display: flex; flex-wrap: wrap; gap: 8px; }
+.statline span { display: flex; flex-direction: column; min-width: 58px; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); line-height: 1.2; }
+.statline small { font: 500 10.5px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.statline b { font-family: var(--font-display); font-size: 19px; margin-top: 3px; }
+.statline .statline-pts { background: var(--accent-soft); border: 1px solid var(--accent-line); }
+.statline .statline-pts b { color: var(--accent); }
+.statline i { font-style: normal; }
+.mail-line.list { padding-left: 20px; display: grid; gap: 4px; }
+.mail-dim { color: var(--muted); }
+.mail-line.sign { margin-top: 14px; }
 .today { color: var(--text); font-size: 14px; font-weight: 500; }
 .ptable { display: none; gap: 4px; margin-top: 12px; font-size: 13px; }
 .ptable.filled { display: grid; }
@@ -1220,6 +1234,11 @@ kbd {
   .pstate .tag-taken::before { content: "✕"; font-size: 11px; }
   .picks li { flex-wrap: wrap; }
   .pick-tag { order: 5; }
+  .pmail-head { flex-wrap: wrap; }
+  .pmail-head .out-to { flex: 1 1 200px; }
+  .statline .hide-sm { display: none; }
+  .pmail-head .tag-sent, .pmail-head .out-state { margin-left: 44px; }
+  .statline span { min-width: 0; flex: 1; padding: 8px 10px; }
   .footer-inner { justify-content: center; text-align: center; }
 }
 
