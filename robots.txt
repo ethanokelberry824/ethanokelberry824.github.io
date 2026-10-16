@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/sitemap.xml
+Sitemap: https://ethanokelberry824.github.io/sitemap.xml

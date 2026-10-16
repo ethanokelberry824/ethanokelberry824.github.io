@@ -1,6 +1,6 @@
 # Ethan Okelberry · Interactive Resume
 
-**Live site:** https://okelberrye-cloud.github.io/Ethan_Okelberry_Personal_Website/
+**Live site:** https://ethanokelberry824.github.io/
 
 A personal site for Sales Engineering and Solutions Consulting roles, built around one idea: *I build it. I sell it.*
 

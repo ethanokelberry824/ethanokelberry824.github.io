@@ -13,7 +13,7 @@ window.SITE = {
   phone: "(916) 300-3650",
   phoneHref: "+19163003650",
   linkedin: "https://www.linkedin.com/in/ethan-okelberry",
-  githubUser: "okelberrye-cloud",
+  githubUser: "ethanokelberry824",
   resume: "assets/Ethan_Okelberry_Resume.pdf",
 
   status: "Open to Sales Engineering & Solutions Consulting roles",
@@ -231,7 +231,7 @@ window.SITE = {
       summary:
         "A 10-minute presentation I built to teach Cisco AI Infrastructure to people who have never set up an AI cluster.",
       stack: ["HTML", "JavaScript", "Presenting", "AI infrastructure"],
-      link: { label: "View the presentation", href: "https://okelberrye-cloud.github.io/cisco-ai-infrastructure/" },
+      link: { label: "View the presentation", href: "https://ethanokelberry824.github.io/cisco-ai-infrastructure/" },
       visual: "outline",
       outlineTitle: "What the talk covers",
       outline: [
