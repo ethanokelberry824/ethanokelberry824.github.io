@@ -2,7 +2,7 @@
    Project demos (sample data only)
    - outreach: mini app walkthrough of the Internship Outreach Agent
    - fantasy:  chat with the Fantasy Baseball Pickup Agent
-   Both play once when scrolled into view, then can be replayed.
+   Both start when the visitor presses the button.
    ========================================================================== */
 (function () {
   "use strict";
@@ -20,6 +20,7 @@
   }
 
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>';
+  var PLANE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg>';
   var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
 
   // Runs a list of [delayMs, fn] steps; returns a cancel function.
@@ -30,15 +31,6 @@
       timers.push(setTimeout(s[1], t));
     });
     return function () { timers.forEach(clearTimeout); };
-  }
-
-  // Play once when the demo is mostly on screen.
-  function autoplay(el, play) {
-    if (!("IntersectionObserver" in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) { io.disconnect(); play(); }
-    }, { threshold: 0.55 });
-    io.observe(el);
   }
 
   /* ------------------------------------------------------------------------
@@ -86,7 +78,7 @@
       '<ol class="app-steps">' +
       '<li class="app-step" data-s="0"><div class="step-head"><span class="step-n">1</span><b>Find the right people</b><span class="step-s"></span></div><ul class="people"></ul></li>' +
       '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Write a personal email to each one</b><span class="step-s"></span></div><div class="bar"><span></span></div><div class="mail"></div></li>' +
-      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Send</b><span class="step-s"></span></div></li>' +
+      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Send</b><span class="step-s"></span></div><ul class="outbox"></ul></li>' +
       "</ol></div>";
 
     var sel = root.querySelector("select");
@@ -95,6 +87,7 @@
     var people = root.querySelector(".people");
     var bar = root.querySelector(".bar span");
     var mail = root.querySelector(".mail");
+    var outbox = root.querySelector(".outbox");
     var cancel = function () {};
 
     function status(i, text, done) {
@@ -109,6 +102,7 @@
       people.innerHTML = '<li class="people-empty">Press Run to try it.</li>';
       bar.style.width = "0%";
       mail.innerHTML = "";
+      outbox.innerHTML = "";
       btn.disabled = false;
       btn.querySelector("span").textContent = "Run";
     }
@@ -143,12 +137,20 @@
           }]);
         })(k);
       }
-      plan.push([300, function () { status(2, "Sending…"); }]);
+      plan.push([300, function () { status(2, "Sending 0 of " + n); }]);
       for (var j = 0; j < n; j++) {
         (function (j) {
-          plan.push([330, function () {
-            var li = people.children[j];
-            if (li) li.querySelector(".tag-ok").outerHTML = '<span class="tag-sent">' + CHECK + "Sent</span>";
+          var p = L.people[j], row;
+          plan.push([200, function () {
+            row = document.createElement("li");
+            row.innerHTML = '<span class="env">' + PLANE + '</span><span class="out-to"><b>To ' + esc(p[0]) + "</b><small>" +
+              esc(L.title) + " at " + esc(L.company) + '</small></span><span class="out-state">Sending…</span>';
+            outbox.appendChild(row);
+          }]);
+          plan.push([520, function () {
+            row.classList.add("sent");
+            row.querySelector(".out-state").outerHTML = '<span class="tag-sent">' + CHECK + "Sent</span>";
+            status(2, j + 1 === n ? "" : "Sending " + (j + 1) + " of " + n);
           }]);
         })(j);
       }
@@ -163,72 +165,109 @@
     btn.addEventListener("click", run);
     sel.addEventListener("change", reset);
     reset();
-    autoplay(root, run);
   }
 
   /* ------------------------------------------------------------------------
      Fantasy Baseball Pickup Agent
+     Story: look up today's projected stat lines, check who's already
+     rostered in my league, hand back the top options to pick up.
      ------------------------------------------------------------------------ */
+  var PITCHERS = [
+    // name, matchup, IP, K, ER, projected points, rostered in my league?
+    ["Marco Diaz", "vs. PIT", "6.2", 9, 1, 21.4, true],
+    ["Luis Varela", "vs. MIA", "6.0", 8, 2, 18.6, true],
+    ["Sam Ortega", "vs. COL", "6.1", 7, 2, 17.8, false],
+    ["Ben Calloway", "@ KC", "5.2", 6, 2, 14.2, false],
+    ["Drew Hollins", "vs. CWS", "6.0", 6, 3, 13.5, false],
+    ["Kyle Brandt", "@ SEA", "5.0", 4, 3, 9.1, false],
+  ];
+
   function fantasy(root) {
     root.innerHTML =
-      '<div class="app chat">' +
+      '<div class="app">' +
       '<div class="app-bar"><span class="app-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="app-title">Pickup Agent</span><span class="app-note">Demo · sample data</span></div>' +
-      '<div class="chat-body" aria-live="polite"></div>' +
-      '<div class="chat-foot"><button type="button" class="btn btn-sm btn-primary" data-act="ask">' + PLAY + "<span>Ask the agent</span></button></div>" +
-      "</div>";
+      '<div class="app-input"><div class="field"><span>Daily run</span><span class="today">Today\'s starting pitchers · My league</span></div>' +
+      '<button type="button" class="btn btn-sm btn-primary" data-act="run">' + PLAY + "<span>Run</span></button></div>" +
+      '<ol class="app-steps">' +
+      '<li class="app-step" data-s="0"><div class="step-head"><span class="step-n">1</span><b>Look up projected stat lines</b><span class="step-s"></span></div>' +
+      '<div class="ptable" role="table" aria-label="Projected pitcher stat lines"><div class="prow phead" role="row"><span>Pitcher</span><span>IP</span><span>K</span><span>ER</span><span>Pts</span><span></span></div></div></li>' +
+      '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Check who\'s rostered in my league</b><span class="step-s"></span></div></li>' +
+      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Top options to pick up</b><span class="step-s"></span></div><ol class="picks"></ol></li>' +
+      "</ol></div>";
 
-    var body = root.querySelector(".chat-body");
-    var btn = root.querySelector('[data-act="ask"]');
+    var btn = root.querySelector('[data-act="run"]');
+    var steps = root.querySelectorAll(".app-step");
+    var table = root.querySelector(".ptable");
+    var picks = root.querySelector(".picks");
     var cancel = function () {};
 
-    function add(html, cls) {
-      var d = document.createElement("div");
-      d.className = "msg " + cls;
-      d.innerHTML = html;
-      body.appendChild(d);
-      body.scrollTop = body.scrollHeight;
-      return d;
+    function status(i, text, done) {
+      var s = steps[i];
+      s.classList.add("on");
+      s.classList.toggle("done", !!done);
+      s.querySelector(".step-s").innerHTML = done ? CHECK + esc(text) : '<i class="dot-spin"></i>' + esc(text);
+    }
+    function reset() {
+      cancel();
+      steps.forEach(function (s) { s.classList.remove("on", "done"); s.querySelector(".step-s").innerHTML = ""; });
+      table.querySelectorAll(".prow:not(.phead)").forEach(function (r) { r.remove(); });
+      table.classList.remove("filled");
+      picks.innerHTML = "";
+      btn.disabled = false;
+      btn.querySelector("span").textContent = "Run";
     }
 
     function run() {
-      cancel();
-      body.innerHTML = "";
+      reset();
       btn.disabled = true;
-      btn.querySelector("span").textContent = "Thinking…";
-      var work, plan = [];
-      var checks = [
-        "Pulled today's probable starters from the MLB API",
-        "Checked each pitcher's last 3 starts",
-        "Compared home and away splits",
-        "Looked at how each opponent hits",
-      ];
-      plan.push([200, function () { add("Who should I pick up today? My pitching is thin this week and I have no idea who's good.", "me"); }]);
-      plan.push([700, function () { work = add('<span class="typing"><i></i><i></i><i></i></span>', "bot"); }]);
-      plan.push([700, function () { work.innerHTML = '<ul class="checks-live"></ul>'; }]);
-      checks.forEach(function (c) {
-        plan.push([620, function () {
-          var li = document.createElement("li");
-          li.innerHTML = CHECK + esc(c);
-          work.querySelector("ul").appendChild(li);
-          body.scrollTop = body.scrollHeight;
+      btn.querySelector("span").textContent = "Running…";
+      var rows = [], plan = [];
+      var available = PITCHERS.filter(function (p) { return !p[6]; });
+
+      plan.push([150, function () { status(0, "Pulling today's starters…"); table.classList.add("filled"); }]);
+      PITCHERS.forEach(function (p) {
+        plan.push([380, function () {
+          var r = document.createElement("div");
+          r.className = "prow";
+          r.setAttribute("role", "row");
+          r.innerHTML = '<span class="pname"><b>' + esc(p[0]) + "</b><small>" + esc(p[1]) + "</small></span><span>" + p[2] + "</span><span>" + p[3] +
+            "</span><span>" + p[4] + '</span><span class="pts">' + p[5].toFixed(1) + '</span><span class="pstate"></span>';
+          table.appendChild(r);
+          rows.push(r);
         }]);
       });
-      plan.push([800, function () {
-        add(
-          '<p class="pick-head">Pick up <b>Sam Ortega</b> (SP)</p>' +
-          '<dl class="pick"><dt>Today</dt><dd>vs. COL, at home</dd><dt>Last 3 starts</dt><dd>2.31 ERA, 21 strikeouts</dd><dt>Projected</dt><dd><b>17.8</b> fantasy points</dd></dl>' +
-          '<p class="pick-alt">Backup: Ben Calloway, 14.2 projected points</p>',
-          "bot answer"
-        );
+      plan.push([400, function () { status(0, PITCHERS.length + " pitchers projected", true); status(1, "Checking my league…"); }]);
+      PITCHERS.forEach(function (p, k) {
+        plan.push([330, function () {
+          var r = rows[k];
+          r.classList.add(p[6] ? "taken" : "open");
+          r.querySelector(".pstate").innerHTML = p[6] ? '<span class="tag-taken">Rostered</span>' : '<span class="tag-sent">' + CHECK + "Available</span>";
+        }]);
+      });
+      plan.push([450, function () {
+        status(1, available.length + " still available", true);
+        status(2, "Ranking…");
+      }]);
+      available.slice(0, 3).forEach(function (p, k) {
+        plan.push([450, function () {
+          var li = document.createElement("li");
+          li.className = k === 0 ? "best" : "";
+          li.innerHTML = '<span class="rank">' + (k + 1) + '</span><span class="pname"><b>' + esc(p[0]) + "</b><small>" + esc(p[1]) + " · " +
+            p[2] + " IP, " + p[3] + " K, " + p[4] + ' ER</small></span><span class="pick-pts"><b>' + p[5].toFixed(1) + "</b> pts</span>" +
+            (k === 0 ? '<span class="pick-tag">Pick up</span>' : "");
+          picks.appendChild(li);
+        }]);
+      });
+      plan.push([300, function () {
+        status(2, "Done", true);
         btn.disabled = false;
-        btn.querySelector("span").textContent = "Ask again";
+        btn.querySelector("span").textContent = "Run again";
       }]);
       cancel = timeline(plan);
     }
 
     btn.addEventListener("click", run);
-    body.innerHTML = '<p class="chat-empty">Press "Ask the agent" to see how it picks a player.</p>';
-    autoplay(root, run);
+    reset();
   }
 
   window.Demos = {

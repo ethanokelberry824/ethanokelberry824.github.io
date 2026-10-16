@@ -239,19 +239,23 @@
   }
 
   /* ---- 01 discovery ----------------------------------------------------- */
-  var selectedNeeds = (S.defaultNeeds || []).slice();
+  var selectedNeeds = (S.defaultNeeds || []).slice(0, 1);
 
   function renderNeeds() {
     $("#needs").innerHTML = S.needs.map(function (n) {
-      return '<button type="button" class="need" data-need="' + n.id + '" aria-pressed="' + (selectedNeeds.indexOf(n.id) !== -1) + '">' +
-        '<span class="box">' + I.check + "</span>" + esc(n.label) + "</button>";
+      return '<button type="button" role="radio" class="need" data-need="' + n.id + '" aria-checked="' + (selectedNeeds.indexOf(n.id) !== -1) + '">' +
+        '<span class="box" aria-hidden="true"></span>' + esc(n.label) + "</button>";
     }).join("");
     $("#needs").addEventListener("click", function (e) {
       var b = e.target.closest(".need");
       if (!b) return;
-      var id = b.getAttribute("data-need"), at = selectedNeeds.indexOf(id);
-      if (at === -1) selectedNeeds.push(id); else selectedNeeds.splice(at, 1);
-      b.setAttribute("aria-pressed", String(at === -1));
+      // One requirement at a time, like a radio button.
+      var id = b.getAttribute("data-need");
+      if (selectedNeeds[0] === id) return;
+      selectedNeeds = [id];
+      $$(".need").forEach(function (n) {
+        n.setAttribute("aria-checked", String(n.getAttribute("data-need") === id));
+      });
       renderFit();
     });
     renderFit();
@@ -284,9 +288,8 @@
     var proof = needs.reduce(function (s, n) { return s + n.evidence.length; }, 0);
     box.innerHTML =
       '<div class="fit-head"><div><p class="mini-label">Fit report</p><p class="fit-title">' +
-      (needs.length === 1 ? "Here's where I've done it." : "All " + needs.length + " are backed by real experience.") + "</p></div>" +
+      "Here's where I've done it.</p></div>" +
       '<p class="fit-score"><strong>' + proof + "</strong>proof points</p></div>" +
-      '<div class="fit-meter" aria-hidden="true">' + needs.map(function () { return "<i></i>"; }).join("") + "</div>" +
       needs.map(function (n) {
         return '<div class="fit-group"><h4>' + I.check + esc(n.label) + "</h4><ul>" +
           n.evidence.map(function (ev) {
@@ -300,9 +303,6 @@
       "&body=" + encodeURIComponent("Hi Ethan,\n\nI'm hiring for a role that needs someone who:\n" + needs.map(function (n) { return "- " + n.label.toLowerCase(); }).join("\n") + "\n\n") +
       '">' + I.mail + "Email me about this role</a></div>";
 
-    $$(".fit-meter i", box).forEach(function (el, i) {
-      setTimeout(function () { el.classList.add("on"); }, 80 + i * 110);
-    });
   }
 
   /* ---- 02 experience ---------------------------------------------------- */
@@ -326,9 +326,9 @@
     $("#eduGrid").innerHTML = S.education.map(function (e) {
       return '<div class="card edu reveal' + (e.main ? " edu-main" : "") + '"><h4>' + esc(e.school) + "</h4><p>" + esc(e.degree) + "</p>" +
         (e.detail ? '<p class="edu-detail">' + esc(e.detail) + "</p>" : "") +
+        (e.extra ? '<p class="edu-extra">' + esc(e.extra) + "</p>" : "") +
         '<p class="when">' + esc(e.dates) + " · " + esc(e.location) + "</p></div>";
     }).join("");
-    $("#eduNote").textContent = S.educationNote || "";
   }
 
   /* ---- 03 projects ------------------------------------------------------ */

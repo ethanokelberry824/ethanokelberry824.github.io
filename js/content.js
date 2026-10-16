@@ -176,6 +176,7 @@ window.SITE = {
       dates: "Jan 2026 – May 2027 (expected)",
       location: "San Marcos, CA",
       detail: "Coursework: Data Structures and Algorithms, Discrete Mathematics, Software Engineering (in progress)",
+      extra: "Founders Club member",
       main: true,
     },
     {
@@ -189,9 +190,9 @@ window.SITE = {
       degree: "Computer Science coursework · 59 units",
       dates: "Aug 2023 – 2025",
       location: "Rocklin, CA",
+      extra: "Ranked in the top 10% of my class · Treasurer of the Chess Club",
     },
   ],
-  educationNote: "74 units of community college coursework, ranked in the top 10% of my class.",
 
   /* ------------------------------------------------------------------------
      03 / PROJECTS
@@ -229,8 +230,8 @@ window.SITE = {
       title: "Fantasy Baseball Pickup Agent",
       when: "2025",
       summary:
-        "I never knew which pitcher to pick up in fantasy baseball, so I built something to figure it out. It pulls game-by-game pitcher data from MLB's public API, checks recent form, home and away splits and how the opponent hits, then tells me who to pick up.",
-      stack: ["Python", "Pandas", "MLB API"],
+        "Every day I have to pick up a pitcher in fantasy baseball, and I never know who to grab. So I built an agent that looks up each pitcher's projected stat line for the day, checks if they're already rostered in my league, and gives me back the top options to pick up.",
+      stack: ["Python", "AI agent", "Fantasy baseball"],
       visual: "fantasy",
     },
   ],
