@@ -243,11 +243,11 @@ window.SITE = {
     },
     {
       id: "project-outreach",
-      title: "Internship Outreach Agent",
+      title: "AI Internship Outreach Agent",
       when: "Feb 2026",
       summary:
-        "Give it a job listing and it finds the right people at that company, then emails each of them a personal note. One listing turns into up to 15 tailored emails with no manual work.",
-      stack: ["Make.com", "Gemini", "Hunter.io", "Gmail"],
+        "I built an AI agent that, when prompted, finds a job listing, connects to Hunter.io to find the emails of the people tied to that role, then writes a tailored email to each of them. One prompt turns into up to 15 personalized emails with no manual work.",
+      stack: ["AI agent", "Gemini", "Hunter.io", "Make.com", "Gmail"],
       visual: "outreach",
     },
     {
