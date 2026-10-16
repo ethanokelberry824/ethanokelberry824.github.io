@@ -192,13 +192,15 @@
       '<li class="app-step" data-s="0"><div class="step-head"><span class="step-n">1</span><b>Look up projected stat lines</b><span class="step-s"></span></div>' +
       '<div class="ptable" role="table" aria-label="Projected pitcher stat lines"><div class="prow phead" role="row"><span>Pitcher</span><span>IP</span><span>K</span><span>ER</span><span>Pts</span><span></span></div></div></li>' +
       '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Check who\'s rostered in my league</b><span class="step-s"></span></div></li>' +
-      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Top options to pick up</b><span class="step-s"></span></div><ol class="picks"></ol></li>' +
+      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Email me the top options</b><span class="step-s"></span></div>' +
+      '<div class="pmail"><div class="pmail-head"><span class="env">' + PLANE + '</span><span class="out-to"><b>Today\'s top pickups</b><small>From: Pickup Agent · To: Ethan</small></span><span class="out-state"></span></div><ol class="picks"></ol></div></li>' +
       "</ol></div>";
 
     var btn = root.querySelector('[data-act="run"]');
     var steps = root.querySelectorAll(".app-step");
     var table = root.querySelector(".ptable");
     var picks = root.querySelector(".picks");
+    var pmail = root.querySelector(".pmail");
     var cancel = function () {};
 
     function status(i, text, done) {
@@ -213,6 +215,8 @@
       table.querySelectorAll(".prow:not(.phead)").forEach(function (r) { r.remove(); });
       table.classList.remove("filled");
       picks.innerHTML = "";
+      pmail.classList.remove("show", "sent");
+      pmail.querySelector(".out-state").innerHTML = "";
       btn.disabled = false;
       btn.querySelector("span").textContent = "Run";
     }
@@ -246,7 +250,8 @@
       });
       plan.push([450, function () {
         status(1, available.length + " still available", true);
-        status(2, "Ranking…");
+        status(2, "Writing the email…");
+        pmail.classList.add("show");
       }]);
       available.slice(0, 3).forEach(function (p, k) {
         plan.push([450, function () {
@@ -258,8 +263,14 @@
           picks.appendChild(li);
         }]);
       });
-      plan.push([300, function () {
-        status(2, "Done", true);
+      plan.push([500, function () {
+        status(2, "Sending…");
+        pmail.querySelector(".out-state").textContent = "Sending…";
+      }]);
+      plan.push([700, function () {
+        pmail.classList.add("sent");
+        pmail.querySelector(".out-state").outerHTML = '<span class="tag-sent">' + CHECK + "Sent to my inbox</span>";
+        status(2, "Emailed", true);
         btn.disabled = false;
         btn.querySelector("span").textContent = "Run again";
       }]);

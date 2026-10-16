@@ -33,6 +33,7 @@
   };
 
   function logoOrMark(item) {
+    if (item.img) return '<img class="logo-img" src="' + esc(item.img) + '" alt="" width="56" height="56" loading="lazy">';
     if (item.logo && LOGOS[item.logo]) return '<span class="logo logo-' + esc(item.logo) + '">' + LOGOS[item.logo] + "</span>";
     return '<span class="mark" style="--co:' + esc(item.color || "#888") + '">' + esc(item.mark || "") + "</span>";
   }
@@ -285,11 +286,9 @@
       box.innerHTML = '<div class="fit-empty"><p>Pick one or more on the left<br>to see the proof.</p></div>';
       return;
     }
-    var proof = needs.reduce(function (s, n) { return s + n.evidence.length; }, 0);
     box.innerHTML =
       '<div class="fit-head"><div><p class="mini-label">Fit report</p><p class="fit-title">' +
-      "Here's where I've done it.</p></div>" +
-      '<p class="fit-score"><strong>' + proof + "</strong>proof points</p></div>" +
+      "Here's where I've done it.</p></div></div>" +
       needs.map(function (n) {
         return '<div class="fit-group"><h4>' + I.check + esc(n.label) + "</h4><ul>" +
           n.evidence.map(function (ev) {
@@ -313,7 +312,7 @@
         return "<span><b>" + esc(s.value) + "</b>" + esc(s.label) + "</span>";
       }).join("") + "</div>" : "";
       return '<article class="job reveal" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
-        '<div class="job-mark' + (j.logo ? " has-logo" : "") + '" aria-hidden="true">' + logoOrMark(j) + "</div>" +
+        '<div class="job-mark' + (j.logo ? " has-logo" : "") + (j.img ? " has-img" : "") + '" aria-hidden="true">' + logoOrMark(j) + "</div>" +
         '<div class="card"><div class="job-top"><div><h3 class="job-role">' + esc(j.role) + '</h3><p class="job-co"><i></i>' + esc(j.company) +
         (j.companyNote ? '<span class="job-note">' + esc(j.companyNote) + "</span>" : "") + "</p></div>" +
         '<p class="job-when">' + esc(j.dates) + (now ? '<span class="job-now">Now</span>' : "") + "<br>" + esc(j.location) + "</p></div>" +

@@ -133,6 +133,7 @@ window.SITE = {
     {
       id: "exp-flashbang",
       mark: "FB",
+      img: "assets/logo-flashbang.png",
       company: "Flash Bang Authentics",
       companyNote: "Live digital commerce startup",
       role: "Sports Break Host / Founding Team Member",
@@ -155,6 +156,7 @@ window.SITE = {
     {
       id: "exp-granitebay",
       mark: "GB",
+      img: "assets/logo-granitebay.png",
       company: "Granite Bay Golf Club",
       role: "Guest Services / Member Relations",
       dates: "May 2022 – May 2025",
@@ -230,8 +232,8 @@ window.SITE = {
       title: "Fantasy Baseball Pickup Agent",
       when: "2025",
       summary:
-        "Every day I have to pick up a pitcher in fantasy baseball, and I never know who to grab. So I built an agent that looks up each pitcher's projected stat line for the day, checks if they're already rostered in my league, and gives me back the top options to pick up.",
-      stack: ["Python", "AI agent", "Fantasy baseball"],
+        "Every day I have to pick up a pitcher in fantasy baseball, and I never know who to grab. So I built an agent that looks up each pitcher's projected stat line for the day, checks if they're already rostered in my league, and emails me the top options to pick up each day.",
+      stack: ["Python", "AI agent", "Email automation"],
       visual: "fantasy",
     },
   ],

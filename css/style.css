@@ -701,14 +701,6 @@ kbd {
 .fit { padding: 28px; min-height: 360px; }
 .fit-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .fit-title { font-family: var(--font-display); font-size: 22px; font-weight: 600; margin-top: 6px; }
-.fit-score {
-  flex: none;
-  text-align: right;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--muted);
-}
-.fit-score strong { display: block; font-family: var(--font-display); font-size: 30px; color: var(--accent); line-height: 1.1; }
 .fit-group { padding: 16px 0; border-top: 1px solid var(--border); animation: swap-in .45s var(--ease); }
 .fit-group h4 {
   display: flex;
@@ -807,6 +799,8 @@ kbd {
 }
 .job-mark.has-logo { background: var(--surface); border-color: var(--border-strong); }
 .job-mark .logo { width: 34px; height: 24px; }
+.job-mark.has-img { overflow: hidden; border-color: var(--border-strong); background: var(--surface); }
+.job-mark .logo-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .job-note {
   margin-left: 4px;
   padding: 1px 9px;
@@ -994,7 +988,13 @@ kbd {
 .out-to small { font-size: 12.5px; color: var(--muted); }
 .out-state { margin-left: auto; flex: none; font-size: 12px; color: var(--muted); }
 
-/* Fantasy: pitcher table + picks */
+/* Fantasy: pitcher table + emailed picks */
+.pmail { display: none; margin-top: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); animation: swap-in .4s var(--ease); }
+.pmail.show { display: block; }
+.pmail-head { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.pmail:not(.sent) .env svg { animation: fly .55s ease-in infinite; }
+.pmail.sent .env { background: color-mix(in srgb, var(--good) 15%, transparent); color: var(--good); }
+.pmail .picks { margin-top: 10px; }
 .today { color: var(--text); font-size: 14px; font-weight: 500; }
 .ptable { display: none; gap: 4px; margin-top: 12px; font-size: 13px; }
 .ptable.filled { display: grid; }

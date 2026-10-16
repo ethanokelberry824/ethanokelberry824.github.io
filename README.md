@@ -49,7 +49,7 @@ js/content.js     all resume content  <- edit this
 js/main.js        rendering and interactions
 js/demos.js       agent demos (sample data)
 js/logos.js       Cisco and AWS logos
-assets/           headshot, resume PDF, fonts
+assets/           headshot, resume PDF, fonts, Flash Bang + Granite Bay logos
 og-image.png      link preview image (1200x630)
 404.html          custom not-found page
 ```
