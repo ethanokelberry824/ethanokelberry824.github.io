@@ -19,6 +19,8 @@ A personal site for Sales Engineering and Solutions Consulting roles, built arou
 
 **All text lives in [`js/content.js`](js/content.js).** Edit it, commit and push; the site updates in about a minute. There's no build step.
 
+After editing CSS or JS, bump the `?v=` number on the file links in `index.html` so browsers load the new version instead of a cached one.
+
 - New job: add an entry to `experience`.
 - New project: add an entry to `projects`. `visual` can be `"outline"` (numbered list), `"outreach"` or `"fantasy"`.
 - New skill: add it to the right group under `skills`.
