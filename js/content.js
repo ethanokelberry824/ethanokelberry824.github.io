@@ -182,12 +182,12 @@ window.SITE = {
       location: "Granite Bay, CA",
       color: "#30a46c",
       stats: [
-        { value: "400", label: "club members" },
+        { value: "200", label: "club members" },
         { value: "80", label: "golf carts managed" },
         { value: "3", label: "years" },
       ],
       bullets: [
-        "Gave high-touch service to about 400 club members for three years, building long-term relationships that kept members coming back.",
+        "Gave high-touch service to about 200 club members for three years, building long-term relationships that kept members coming back.",
         "Helped onboard new staff and was trusted with opening and closing the club.",
         "Managed a fleet of 80 golf carts, keeping them clean and ready in a fast-paced environment.",
       ],
