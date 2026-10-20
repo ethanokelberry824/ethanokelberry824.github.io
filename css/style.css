@@ -1341,9 +1341,12 @@ kbd {
 
 @media (max-width: 860px) {
   .hero { padding-top: calc(var(--nav-h) + 32px); }
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
-  .hero-visual { order: -1; }
-  .portrait { width: min(240px, 64vw); }
+  .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+  /* Small, left-aligned portrait so the name and headline make the first screen */
+  .hero-visual { order: -1; justify-content: flex-start; }
+  .portrait { width: min(150px, 40vw); }
+  .portrait-frame { border-radius: 20px; }
+  .portrait-glow, .portrait::before { border-radius: 22px; }
   .hero-canvas { opacity: .5; }
   .creds { margin-top: 44px; }
   .stats { grid-template-columns: repeat(2, 1fr); gap: 24px 20px; }
@@ -1355,6 +1358,14 @@ kbd {
   .container { padding-inline: 16px; }
   .nav-inner { padding-inline: 16px; gap: 10px; }
   .brand-name { display: none; }
+  .status-pill {
+    align-items: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+  }
+  .status-pill .pulse { margin-top: .5em; }
   .hero-headline { max-width: none; }
   .hero-proof { flex-direction: column; gap: 4px; }
   .hero-summary, .lede { font-size: 16px; }
