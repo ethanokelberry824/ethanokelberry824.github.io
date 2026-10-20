@@ -23,6 +23,7 @@ After editing CSS or JS, bump the `?v=` number on the file links in `index.html`
 
 - New job: add an entry to `experience`.
 - New project: add an entry to `projects`. `visual` can be `"outline"` (numbered list), `"outreach"` or `"fantasy"`.
+- Project chart: give a project a `chart` (see the fantasy baseball entry) and a line chart draws itself under the project when it scrolls into view. Add `actual: [...]` to compare real results against the projections.
 - New skill: add it to the right group under `skills`.
 - Swap the resume: replace `assets/Ethan_Okelberry_Resume.pdf` (keep the file name, or update `resume`).
 - Swap the headshot: replace `assets/headshot-800.jpg`, `headshot-800.webp` and `headshot-480.webp` (4:5 portrait).

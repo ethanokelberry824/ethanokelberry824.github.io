@@ -263,6 +263,24 @@ window.SITE = {
         "Every day I have to pick up a pitcher in fantasy baseball, and I never know who to grab. So I built an agent that looks up each pitcher's projected stat line for the day, checks if they're already rostered in my league, and emails me the top options to pick up each day.",
       stack: ["Python", "AI agent", "Email automation"],
       visual: "fantasy",
+      // Real output from one daily run of the pipeline (ESPN Forecaster scoring),
+      // highest projection first. To compare against what really happened, add
+      // `actual: [...]` with each pitcher's real points in the same order.
+      chart: {
+        title: "Projected fantasy points, every starter",
+        date: "Jul 12, 2026",
+        source: "Real output from one daily run · ESPN scoring",
+        pitchers: [
+          ["Jacob Misiorowski", 15.8], ["Zack Wheeler", 15.4], ["Ian Seymour", 14.1], ["Tarik Skubal", 12.9],
+          ["Kevin Gausman", 12.3], ["Paul Skenes", 12], ["Taj Bradley", 11.5], ["Jacob deGrom", 11.4],
+          ["Payton Tolle", 11.4], ["Emmet Sheehan", 11.3], ["Joey Cantillo", 10.5], ["Kodai Senga", 10.3],
+          ["Emerson Hancock", 10.2], ["JR Ritchie", 10.2], ["Matthew Boyd", 9.6], ["Shane Baz", 9.4],
+          ["Noah Schultz", 9.3], ["J.T. Ginn", 8.7], ["Dustin May", 8.3], ["Jose Soriano", 8.2],
+          ["Trevor McDonald", 8.2], ["Cade Cavalli", 8.1], ["Zac Gallen", 7.8], ["Andrew Abbott", 7.8],
+          ["Michael Lorenzen", 7.3], ["Will Warren", 6.5], ["German Marquez", 6.4], ["Ryan Gusto", 5.8],
+          ["Cristian Javier", 5.1],
+        ],
+      },
     },
   ],
 

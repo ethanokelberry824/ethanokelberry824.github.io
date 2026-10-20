@@ -337,6 +337,113 @@
   }
 
   /* ---- 03 projects ------------------------------------------------------ */
+  var CHART = { w: 400, h: 160, pad: 6, top: 10, bottom: 4 };
+
+  function chartGeometry(c) {
+    var vals = c.pitchers.map(function (r) { return r[1]; });
+    var max = Math.ceil(Math.max.apply(null, vals.concat(c.actual || [])) / 5) * 5;
+    var n = vals.length;
+    function x(i) { return CHART.pad + (i * (CHART.w - CHART.pad * 2)) / (n - 1); }
+    function y(v) { return CHART.top + (1 - v / max) * (CHART.h - CHART.top - CHART.bottom); }
+    return { vals: vals, max: max, n: n, x: x, y: y };
+  }
+
+  function chartPath(g, series) {
+    return series.map(function (v, i) { return (i ? "L" : "M") + g.x(i).toFixed(1) + " " + g.y(v).toFixed(1); }).join("");
+  }
+
+  function projectChart(p) {
+    var c = p.chart, g = chartGeometry(c), id = "grad-" + esc(p.id);
+    var line = chartPath(g, g.vals);
+    var area = line + "L" + g.x(g.n - 1).toFixed(1) + " " + g.y(0) + "L" + g.x(0).toFixed(1) + " " + g.y(0) + "Z";
+    var ticks = [];
+    for (var t = 0; t <= g.max; t += 5) ticks.push(t);
+    var ratio = (g.vals[0] / g.vals[g.n - 1]).toFixed(1);
+    var legend = c.actual ? '<p class="pchart-legend"><span><i class="k-proj"></i>Projected</span><span><i class="k-act"></i>Actual</span></p>' : "";
+
+    return '<figure class="pchart" data-chart="' + esc(p.id) + '">' +
+      '<figcaption class="pchart-head"><div><p class="mini-label">' + esc(c.date) + "</p>" +
+      '<p class="pchart-title">' + esc(c.title) + "</p></div>" +
+      '<p class="pchart-kpi"><b data-to="' + g.vals[0] + '">' + g.vals[0].toFixed(1) + "</b><span>pts, top pick</span></p></figcaption>" +
+      legend +
+      '<div class="pchart-plot">' +
+      '<svg viewBox="0 0 ' + CHART.w + " " + CHART.h + '" role="img" aria-label="' +
+      esc(c.title + ", " + c.date + ": from " + g.vals[0] + " points for " + c.pitchers[0][0] + " down to " + g.vals[g.n - 1] + " for " + c.pitchers[g.n - 1][0] + ".") + '">' +
+      '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0"/><stop offset="1"/></linearGradient></defs>' +
+      ticks.map(function (t) { return '<line class="pchart-grid" x1="0" x2="' + CHART.w + '" y1="' + g.y(t).toFixed(1) + '" y2="' + g.y(t).toFixed(1) + '"/>'; }).join("") +
+      '<path class="pchart-area" fill="url(#' + id + ')" d="' + area + '"/>' +
+      '<path class="pchart-line" pathLength="1" d="' + line + '"/>' +
+      (c.actual ? '<path class="pchart-line pchart-actual" pathLength="1" d="' + chartPath(g, c.actual) + '"/>' : "") +
+      '<line class="pchart-xhair" y1="0" y2="' + CHART.h + '"/>' +
+      '<circle class="pchart-dot pchart-peak" cx="' + g.x(0).toFixed(1) + '" cy="' + g.y(g.vals[0]).toFixed(1) + '" r="4"/>' +
+      '<circle class="pchart-dot pchart-hover" r="4"/>' +
+      "</svg>" +
+      ticks.map(function (t) { return '<span class="pchart-tick" style="top:' + ((g.y(t) / CHART.h) * 100).toFixed(2) + '%">' + t + "</span>"; }).join("") +
+      '<div class="pchart-tip" aria-hidden="true"></div></div>' +
+      '<p class="pchart-axis"><span>#1 ranked</span><span>Top pick projects ' + ratio + "&times; the last starter</span><span>#" + g.n + "</span></p>" +
+      '<p class="pchart-source">' + esc(c.source) + "</p>" +
+      '<div class="sr-only"><table><caption>' + esc(c.title + ", " + c.date) + "</caption><thead><tr><th>Rank</th><th>Pitcher</th><th>Projected points</th>" +
+      (c.actual ? "<th>Actual points</th>" : "") + "</tr></thead><tbody>" +
+      c.pitchers.map(function (r, i) {
+        return "<tr><td>" + (i + 1) + "</td><td>" + esc(r[0]) + "</td><td>" + r[1] + "</td>" + (c.actual ? "<td>" + c.actual[i] + "</td>" : "") + "</tr>";
+      }).join("") + "</tbody></table></div></figure>";
+  }
+
+  // Draw each chart once it scrolls into view, count the headline number up,
+  // and show a crosshair + tooltip on hover.
+  function projectCharts() {
+    $$(".pchart").forEach(function (fig) {
+      var p = S.projects.filter(function (x) { return x.id === fig.getAttribute("data-chart"); })[0];
+      var c = p.chart, g = chartGeometry(c);
+      var svg = $("svg", fig), plot = $(".pchart-plot", fig), tip = $(".pchart-tip", fig);
+      var kpi = $(".pchart-kpi b", fig), to = +kpi.getAttribute("data-to");
+
+      // Keep strokes and dots the same on-screen size at any width.
+      function scale() { svg.style.setProperty("--k", (CHART.w / (svg.getBoundingClientRect().width || CHART.w)).toFixed(3)); }
+      scale();
+      window.addEventListener("resize", scale);
+
+      function draw() {
+        fig.classList.add("in");
+        if (reducedMotion()) return;
+        var t0 = performance.now();
+        (function step(now) {
+          var q = Math.min(1, (now - t0) / 1100);
+          kpi.textContent = (to * (1 - Math.pow(1 - q, 3))).toFixed(1);
+          if (q < 1) requestAnimationFrame(step);
+        })(t0);
+      }
+      if (!("IntersectionObserver" in window) || reducedMotion()) draw();
+      else {
+        kpi.textContent = "0.0";
+        var io = new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting) { io.disconnect(); draw(); }
+        }, { threshold: 0.45 });
+        io.observe(svg);
+      }
+
+      function hover(e) {
+        var r = svg.getBoundingClientRect();
+        var u = ((e.clientX - r.left) / r.width) * CHART.w;
+        var i = Math.max(0, Math.min(g.n - 1, Math.round(((u - CHART.pad) / (CHART.w - CHART.pad * 2)) * (g.n - 1))));
+        var px = g.x(i), py = g.y(g.vals[i]);
+        $(".pchart-xhair", svg).setAttribute("x1", px);
+        $(".pchart-xhair", svg).setAttribute("x2", px);
+        $(".pchart-hover", svg).setAttribute("cx", px);
+        $(".pchart-hover", svg).setAttribute("cy", py);
+        tip.innerHTML = "<small>#" + (i + 1) + "</small><b>" + esc(c.pitchers[i][0]) + "</b><span>" + g.vals[i].toFixed(1) + " pts projected" +
+          (c.actual ? " · " + c.actual[i] + " actual" : "") + "</span>";
+        tip.style.setProperty("--tx", (px / CHART.w).toFixed(4));
+        tip.style.setProperty("--ty", (py / CHART.h).toFixed(4));
+        tip.classList.toggle("flip", px > CHART.w * 0.6);
+        fig.classList.add("hovering");
+      }
+      plot.addEventListener("pointermove", hover);
+      plot.addEventListener("pointerdown", hover);
+      plot.addEventListener("pointerleave", function () { fig.classList.remove("hovering"); });
+    });
+  }
+
   function renderProjects() {
     var wrap = $("#projectList");
     wrap.innerHTML = S.projects.map(function (p) {
@@ -349,6 +456,7 @@
         '<div class="project-info"><p class="project-when">' + esc(p.when) + '</p><h3 class="project-title">' + esc(p.title) + "</h3>" +
         '<p class="project-summary">' + esc(p.summary) + "</p>" +
         '<div class="tags">' + p.stack.map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") + "</div>" +
+        (p.chart ? projectChart(p) : "") +
         link + "</div>" +
         '<div class="demo" data-visual="' + esc(p.visual) + '">' + visual + "</div></article>";
     }).join("");
@@ -494,6 +602,7 @@
     navigation();
     reveals();
     countUp();
+    projectCharts();
     roleTyper();
     heroNetwork();
     portraitTilt();
