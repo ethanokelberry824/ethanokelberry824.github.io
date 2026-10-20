@@ -712,6 +712,20 @@ kbd {
 .need[aria-checked="true"] { border-color: var(--accent-line); background: var(--accent-soft); color: var(--text); }
 .need[aria-checked="true"] .box { border-color: var(--accent); }
 .need[aria-checked="true"] .box::after { transform: scale(1); }
+/* Rows stagger in once when the section is revealed */
+.js .discovery.reveal .need { opacity: 0; transform: translateY(8px); }
+.js .discovery.reveal.in .need {
+  opacity: 1;
+  transform: none;
+  transition: opacity .3s var(--ease-out) var(--d, 0ms), transform .3s var(--ease-out) var(--d, 0ms),
+    color .25s var(--ease), background-color .25s var(--ease), border-color .25s var(--ease);
+}
+.need:nth-child(2) { --d: 40ms; }
+.need:nth-child(3) { --d: 80ms; }
+.need:nth-child(4) { --d: 120ms; }
+.need:nth-child(5) { --d: 160ms; }
+.need:nth-child(6) { --d: 200ms; }
+.need:nth-child(n+7) { --d: 240ms; }
 
 .fit { padding: 28px; min-height: 360px; }
 .fit-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
@@ -1285,4 +1299,5 @@ kbd {
   }
   .js .reveal { opacity: 1; transform: none; }
   .hero-headline .w > span { animation: none; }
+  .js .discovery.reveal .need { opacity: 1; transform: none; }
 }
