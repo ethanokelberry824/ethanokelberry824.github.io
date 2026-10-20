@@ -495,12 +495,9 @@ kbd {
   from { opacity: 0; transform: translateY(100%); }
   to { opacity: 1; transform: none; }
 }
-.hl .w > span {
-  background: linear-gradient(90deg, var(--accent), var(--accent-alt));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* "I build it." in tech cyan, "I sell it." in biz amber */
+.hl-tech { color: var(--tech); }
+.hl-biz { color: var(--biz); }
 .hero-summary {
   color: var(--text-2);
   font-size: 17px;
@@ -769,6 +766,25 @@ kbd {
   transform: scaleY(0);
 }
 .job { position: relative; padding-left: 80px; }
+/* Tech roles get a cyan left edge, sales roles an amber one */
+.job-tech { --edge: var(--tech); }
+.job-biz {
+  --edge: var(--biz);
+  --accent: var(--biz);
+  --accent-soft: color-mix(in srgb, var(--biz) 13%, transparent);
+  --accent-line: color-mix(in srgb, var(--biz) 45%, transparent);
+}
+.job[class*="job-"] .card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--edge);
+  pointer-events: none;
+}
+:root[data-theme="light"] .job[class*="job-"] .card::after { opacity: .75; }
 .job-mark {
   position: absolute;
   left: 4px;

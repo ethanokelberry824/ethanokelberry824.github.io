@@ -76,8 +76,8 @@
   /* ---- hero ------------------------------------------------------------- */
   function renderHero() {
     $("#statusText").textContent = S.status;
-    // Highlight everything after the first sentence. Each word gets its own
-    // mask so the headline can reveal one word at a time.
+    // First sentence in tech color, the rest in biz color. Each word gets its
+    // own mask so the headline can reveal one word at a time.
     var cut = S.headline.indexOf(". "), n = 0;
     function words(str) {
       return str.split(" ").map(function (w) {
@@ -85,7 +85,7 @@
       }).join(" ");
     }
     $("#heroHeadline").innerHTML = cut === -1 ? words(S.headline)
-      : words(S.headline.slice(0, cut + 1)) + ' <span class="hl">' + words(S.headline.slice(cut + 2)) + "</span>";
+      : '<span class="hl-tech">' + words(S.headline.slice(0, cut + 1)) + '</span> <span class="hl-biz">' + words(S.headline.slice(cut + 2)) + "</span>";
     $("#heroSummary").textContent = S.summary;
 
     $("#heroCtas").innerHTML =
@@ -317,7 +317,7 @@
       var stats = j.stats ? '<div class="job-stats">' + j.stats.map(function (s) {
         return "<span><b>" + esc(s.value) + "</b>" + esc(s.label) + "</span>";
       }).join("") + "</div>" : "";
-      return '<article class="job reveal" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
+      return '<article class="job reveal' + (j.track ? " job-" + esc(j.track) : "") + '" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
         '<div class="job-mark' + (j.logo ? " has-logo" : "") + (j.img ? " has-img" : "") + '" aria-hidden="true">' + logoOrMark(j) + "</div>" +
         '<div class="card"><div class="job-top"><div><h3 class="job-role">' + esc(j.role) + '</h3><p class="job-co"><i></i>' + esc(j.company) +
         (j.companyNote ? '<span class="job-note">' + esc(j.companyNote) + "</span>" : "") + "</p></div>" +

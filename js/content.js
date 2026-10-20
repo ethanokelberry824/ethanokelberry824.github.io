@@ -116,6 +116,7 @@ window.SITE = {
   /* ------------------------------------------------------------------------
      02 / EXPERIENCE
      logo: "cisco" or "aws" uses js/logos.js. Otherwise `mark` shows as a badge.
+     track: "tech" (cyan edge) or "biz" (amber edge) color-codes the card.
      ------------------------------------------------------------------------ */
   experience: [
     {
@@ -126,6 +127,7 @@ window.SITE = {
       dates: "Jun 2026 – Aug 2026",
       location: "Remote",
       color: "#1ba0d7",
+      track: "tech",
       bullets: [
         "Led an intern capstone to find and build an AI-driven solution, and presented it to Cisco's Head of AI.",
         "Contributed to a new sales enablement project for a Cisco product in higher education, researching, writing and structuring the customer-facing reference docs.",
@@ -142,6 +144,7 @@ window.SITE = {
       dates: "Aug 2026 – Present",
       location: "San Marcos, CA",
       color: "#ff9900",
+      track: "tech",
       bullets: [
         "Selected to represent the AWS Student Builder program at Cal State San Marcos.",
         "Host cloud fundamentals workshops and get students started on AWS Builder Center, AWS services and certifications.",
@@ -159,6 +162,7 @@ window.SITE = {
       dates: "Sep 2025 – May 2026",
       location: "San Marcos, CA",
       color: "#e5484d",
+      track: "biz",
       stats: [
         { value: "2×", label: "quota" },
         { value: "500+", label: "viewers per stream" },
@@ -181,6 +185,7 @@ window.SITE = {
       dates: "May 2022 – May 2025",
       location: "Granite Bay, CA",
       color: "#30a46c",
+      track: "biz",
       stats: [
         { value: "200", label: "club members" },
         { value: "80", label: "golf carts managed" },
