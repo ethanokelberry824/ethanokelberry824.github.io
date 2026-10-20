@@ -86,6 +86,9 @@
     }
     $("#heroHeadline").innerHTML = cut === -1 ? words(S.headline)
       : '<span class="hl-tech">' + words(S.headline.slice(0, cut + 1)) + '</span> <span class="hl-biz">' + words(S.headline.slice(cut + 2)) + "</span>";
+    var pick = +(new URLSearchParams(location.search).get("subhead") || S.subhead || 0);
+    var proof = (S.subheads || [])[pick] || (S.subheads || [])[0];
+    $("#heroProof").innerHTML = proof ? proof.split(" · ").map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") : "";
     $("#heroSummary").textContent = S.summary;
 
     $("#heroCtas").innerHTML =

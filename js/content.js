@@ -29,6 +29,14 @@ window.SITE = {
 
   headline: "I build it. I sell it.",
 
+  // Proof line under the headline, items separated by " · ". `subhead` picks
+  // which one shows. Preview another without editing with ?subhead=1 in the URL.
+  subheads: [
+    "Ex-Cisco Technical Sales Engineering Intern · AWS Student Builder Campus Leader · CS @ CSUSM",
+    "Sales Engineering · Solutions Consulting · Python, SQL, REST APIs, AWS",
+  ],
+  subhead: 0,
+
   summary:
     "I'm a Computer Science student at Cal State San Marcos going after Sales Engineering and Solutions Consulting roles. I was a Technical Sales Engineering Intern at Cisco, I'm an AWS Student Builder Campus Leader, and I was the first hire at a live commerce startup where I sold at 2× quota.",
 

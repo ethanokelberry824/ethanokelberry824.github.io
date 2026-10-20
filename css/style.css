@@ -498,6 +498,27 @@ kbd {
 /* "I build it." in tech cyan, "I sell it." in biz amber */
 .hl-tech { color: var(--tech); }
 .hl-biz { color: var(--biz); }
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: -2px 0 18px;
+  color: var(--text);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.hero-proof:empty { display: none; }
+.hero-proof span { display: inline-flex; align-items: center; gap: 9px; }
+.hero-proof span::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.js .hero-proof { animation: swap-in .3s var(--ease-out) .62s both; }
 .hero-summary {
   color: var(--text-2);
   font-size: 17px;
@@ -1335,6 +1356,7 @@ kbd {
   .nav-inner { padding-inline: 16px; gap: 10px; }
   .brand-name { display: none; }
   .hero-headline { max-width: none; }
+  .hero-proof { flex-direction: column; gap: 4px; }
   .hero-summary, .lede { font-size: 16px; }
   .cta-row .btn { flex: 1 1 auto; }
   .cta-row .btn-social { width: auto; padding: 0 20px; }
@@ -1385,4 +1407,5 @@ kbd {
   .hero-headline .w > span { animation: none; }
   .js .discovery.reveal .need { opacity: 1; transform: none; }
   .pchart * { transition-delay: 0s !important; }
+  .js .hero-proof { animation: none; }
 }
