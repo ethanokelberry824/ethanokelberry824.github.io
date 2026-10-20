@@ -566,8 +566,15 @@
       return;
     }
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      // Elements that come into view together cascade in, 60ms apart.
+      entries.filter(function (en) { return en.isIntersecting; }).forEach(function (en, i) {
+        var el = en.target;
+        if (i) {
+          el.style.transitionDelay = Math.min(i, 4) * 60 + "ms";
+          setTimeout(function () { el.style.transitionDelay = ""; }, 700);
+        }
+        el.classList.add("in");
+        io.unobserve(el);
       });
     }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
     els.forEach(function (el) { io.observe(el); });
