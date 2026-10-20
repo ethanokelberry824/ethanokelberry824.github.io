@@ -123,8 +123,9 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration-color: var(--accent-line); text-underline-offset: 3px; }
 a:hover { text-decoration-color: var(--accent); }
 button { font: inherit; color: inherit; cursor: pointer; }
-h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; letter-spacing: -.02em; }
-p { margin: 0; }
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; letter-spacing: -.02em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+li, dd { text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; }
 kbd {
   font-family: var(--font-mono);
@@ -618,6 +619,7 @@ kbd {
 .stats > div { display: flex; flex-direction: column-reverse; gap: 6px; }
 .stats dd {
   margin: 0;
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(2.1rem, 4vw, 3rem);
@@ -881,7 +883,7 @@ kbd {
 }
 .job-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .job-stats span { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 12px; border-radius: 10px; background: var(--surface-2); color: var(--text-2); font-size: 13px; }
-.job-stats b { font-family: var(--font-display); font-size: 18px; color: var(--accent); }
+.job-stats b { font-family: var(--font-display); font-size: 18px; color: var(--accent); font-variant-numeric: tabular-nums; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag {
   padding: 3px 10px;
