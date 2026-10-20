@@ -76,10 +76,16 @@
   /* ---- hero ------------------------------------------------------------- */
   function renderHero() {
     $("#statusText").textContent = S.status;
-    // Highlight everything after the first sentence.
-    var cut = S.headline.indexOf(". ");
-    $("#heroHeadline").innerHTML = cut === -1 ? esc(S.headline)
-      : esc(S.headline.slice(0, cut + 1)) + ' <span class="hl">' + esc(S.headline.slice(cut + 2)) + "</span>";
+    // Highlight everything after the first sentence. Each word gets its own
+    // mask so the headline can reveal one word at a time.
+    var cut = S.headline.indexOf(". "), n = 0;
+    function words(str) {
+      return str.split(" ").map(function (w) {
+        return '<span class="w"><span style="--i:' + (n++) + '">' + esc(w) + "</span></span>";
+      }).join(" ");
+    }
+    $("#heroHeadline").innerHTML = cut === -1 ? words(S.headline)
+      : words(S.headline.slice(0, cut + 1)) + ' <span class="hl">' + words(S.headline.slice(cut + 2)) + "</span>";
     $("#heroSummary").textContent = S.summary;
 
     $("#heroCtas").innerHTML =

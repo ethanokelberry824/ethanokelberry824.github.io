@@ -30,6 +30,7 @@
   --radius: 20px;
   --nav-h: 64px;
   --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
 
   /* dark (default) */
   --bg: #07090f;
@@ -477,7 +478,24 @@ kbd {
   letter-spacing: -.02em;
   max-width: 22ch;
 }
-.hl {
+/* Headline masks in one word at a time on load */
+.hero-headline .w {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: .1em;
+  margin-bottom: -.1em;
+  vertical-align: bottom;
+}
+.hero-headline .w > span {
+  display: inline-block;
+  animation: word-in .3s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: none; }
+}
+.hl .w > span {
   background: linear-gradient(90deg, var(--accent), var(--accent-alt));
   -webkit-background-clip: text;
   background-clip: text;
@@ -646,8 +664,8 @@ kbd {
 /* Reveal on scroll (only when JS is running) */
 .js .reveal {
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transform: scale(.96);
+  transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
 }
 .js .reveal.in { opacity: 1; transform: none; }
 
@@ -1250,4 +1268,5 @@ kbd {
     transition-duration: .001ms !important;
   }
   .js .reveal { opacity: 1; transform: none; }
+  .hero-headline .w > span { animation: none; }
 }
