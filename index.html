@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ethan Okelberry · Sales Engineering & Computer Science</title>
-  <meta name="description" content="Ethan Okelberry: Computer Science student at Cal State San Marcos pursuing Sales Engineering and Solutions Consulting roles. Former Cisco Technical Sales Engineering Intern, AWS Student Builder Campus Leader.">
+  <meta name="description" content="Ethan Okelberry: Computer Science senior at Cal State San Marcos (May 2027) pursuing Sales Engineer, Solutions Engineer and Solutions Architect roles. Former Cisco Technical Sales Engineering Intern, incoming AI Club President.">
   <meta name="author" content="Ethan Okelberry">
   <meta name="theme-color" content="#07090f">
   <link rel="canonical" href="https://ethanokelberry824.github.io/">
 
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Ethan Okelberry · Sales Engineering & Computer Science">
-  <meta property="og:description" content="I build it. I sell it. Ex-Cisco Technical Sales Engineering Intern · AWS Student Builder Campus Leader · CS @ CSUSM.">
+  <meta property="og:description" content="I build it. I sell it. Ex-Cisco Technical Sales Engineering Intern · Incoming AI Club President · CS @ CSUSM.">
   <meta property="og:url" content="https://ethanokelberry824.github.io/">
   <meta property="og:image" content="https://ethanokelberry824.github.io/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -27,7 +27,8 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css?v=202610160040">
+  <link rel="stylesheet" href="css/style.css?v=202611251700">
+  <link rel="stylesheet" href="css/jump.css?v=202611251700">
 
   <script>
     // Apply saved theme before first paint, so there's no flash.
@@ -51,10 +52,10 @@
     "address": { "@type": "PostalAddress", "addressLocality": "San Marcos", "addressRegion": "CA" },
     "alumniOf": [
       { "@type": "CollegeOrUniversity", "name": "California State University San Marcos" },
-      { "@type": "CollegeOrUniversity", "name": "Sierra College" },
-      { "@type": "CollegeOrUniversity", "name": "Palomar College" }
+      { "@type": "CollegeOrUniversity", "name": "Palomar College" },
+      { "@type": "CollegeOrUniversity", "name": "Sierra College" }
     ],
-    "knowsAbout": ["Sales Engineering", "Solutions Consulting", "Python", "SQL", "REST APIs", "Data Pipelines", "Generative AI", "AWS", "AI Infrastructure"],
+    "knowsAbout": ["Sales Engineering", "Solutions Engineering", "Python", "SQL", "REST APIs", "Machine Learning", "Generative AI", "AI Infrastructure"],
     "sameAs": ["https://www.linkedin.com/in/ethan-okelberry", "https://github.com/ethanokelberry824"]
   }
   </script>
@@ -71,11 +72,10 @@
       </a>
 
       <nav class="nav-links" id="navLinks" aria-label="Sections">
-        <a href="#discovery"><span class="nav-num">01</span>Discovery</a>
-        <a href="#experience"><span class="nav-num">02</span>Experience</a>
-        <a href="#projects"><span class="nav-num">03</span>Projects</a>
-        <a href="#skills"><span class="nav-num">04</span>Skills</a>
-        <a href="#contact"><span class="nav-num">05</span>Contact</a>
+        <a href="#experience"><span class="nav-num">01</span>Experience</a>
+        <a href="#projects"><span class="nav-num">02</span>Projects</a>
+        <a href="#discovery"><span class="nav-num">03</span>Discovery</a>
+        <a href="#contact"><span class="nav-num">04</span>Contact</a>
       </nav>
 
       <div class="nav-tools">
@@ -129,11 +129,47 @@
       </div>
     </section>
 
-    <!-- 01 DISCOVERY ---------------------------------------------------- -->
-    <section class="section" id="discovery" data-stage="01" data-stage-name="Discovery">
+    <!-- 02 EXPERIENCE --------------------------------------------------- -->
+    <section class="section" id="experience" data-stage="01" data-stage-name="Experience">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow"><span>01</span> Discovery</p>
+          <p class="eyebrow"><span>01</span> Experience</p>
+          <h2>Where I've done it.</h2>
+        </header>
+        <div class="timeline" id="timeline">
+          <div class="timeline-line" aria-hidden="true"><span id="timelineFill"></span></div>
+        </div>
+
+        <div class="edu-skills">
+          <div class="card edu-card reveal" id="education">
+            <p class="mini-label">Education</p>
+            <div class="edu-grid" id="eduGrid"></div>
+          </div>
+          <div class="card skills reveal" id="skills">
+            <p class="mini-label">Skills</p>
+            <div id="skillList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 PROJECTS ----------------------------------------------------- -->
+    <section class="section" id="projects" data-stage="02" data-stage-name="Projects">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span>02</span> Projects</p>
+          <h2>What I've built.</h2>
+          <p class="lede">Live apps, demo videos and code. Press Run on the outreach agent to watch how it works (sample data).</p>
+        </header>
+        <div class="projects" id="projectList"></div>
+      </div>
+    </section>
+
+    <!-- 03 DISCOVERY ---------------------------------------------------- -->
+    <section class="section" id="discovery" data-stage="03" data-stage-name="Discovery">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow"><span>03</span> Discovery</p>
           <h2>Tell me what your team needs.</h2>
           <p class="lede">Pick what the role calls for, and I'll show you where I've already done it.</p>
         </header>
@@ -147,53 +183,14 @@
       </div>
     </section>
 
-    <!-- 02 EXPERIENCE --------------------------------------------------- -->
-    <section class="section" id="experience" data-stage="02" data-stage-name="Experience">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow"><span>02</span> Track record</p>
-          <h2>Where I've done it.</h2>
-        </header>
-        <div class="timeline" id="timeline">
-          <div class="timeline-line" aria-hidden="true"><span id="timelineFill"></span></div>
-        </div>
-
-        <h3 class="sub-head reveal" id="education">Education</h3>
-        <div class="edu-grid" id="eduGrid"></div>
-      </div>
-    </section>
-
-    <!-- 03 PROJECTS ----------------------------------------------------- -->
-    <section class="section" id="projects" data-stage="03" data-stage-name="Projects">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow"><span>03</span> Projects</p>
-          <h2>What I've built.</h2>
-          <p class="lede">Press Run on either agent to watch how it works. The demos use sample data.</p>
-        </header>
-        <div class="projects" id="projectList"></div>
-      </div>
-    </section>
-
-    <!-- 04 SKILLS ------------------------------------------------------- -->
-    <section class="section" id="skills" data-stage="04" data-stage-name="Skills">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="eyebrow"><span>04</span> Skills</p>
-          <h2>What I work with.</h2>
-        </header>
-        <div class="skills card reveal" id="skillList"></div>
-      </div>
-    </section>
-
-    <!-- 05 CONTACT ------------------------------------------------------ -->
-    <section class="section contact" id="contact" data-stage="05" data-stage-name="Contact">
+    <!-- 04 CONTACT ------------------------------------------------------ -->
+    <section class="section contact" id="contact" data-stage="04" data-stage-name="Contact">
       <div class="container">
         <div class="contact-grid">
           <div class="contact-copy reveal">
-            <p class="eyebrow"><span>05</span> Contact</p>
+            <p class="eyebrow"><span>04</span> Contact</p>
             <h2>Let's talk.</h2>
-            <p class="lede">I'm looking for Sales Engineering and Solutions Consulting roles where I sit between the product and the customer. Call, text or email me. I'll get back to you fast.</p>
+            <p class="lede">I'm looking for Sales Engineer, Solutions Engineer and Solutions Architect roles where I sit between the product and the customer. Call, text or email me. I'll get back to you fast.</p>
             <div class="contact-actions" id="contactActions"></div>
           </div>
           <aside class="tldr card reveal" aria-label="Summary for recruiters">
@@ -219,9 +216,10 @@
     <div class="noscript">This site works best with JavaScript turned on. You can still <a href="assets/Ethan_Okelberry_Resume.pdf">download my resume (PDF)</a>, call <a href="tel:+19163003650">(916) 300-3650</a> or email <a href="mailto:ethanokelberry824@gmail.com">ethanokelberry824@gmail.com</a>.</div>
   </noscript>
 
-  <script src="js/content.js?v=202610160040" defer></script>
-  <script src="js/logos.js?v=202610160040" defer></script>
-  <script src="js/demos.js?v=202610160040" defer></script>
-  <script src="js/main.js?v=202610160040" defer></script>
+  <script src="js/content.js?v=202611251700" defer></script>
+  <script src="js/logos.js?v=202611251700" defer></script>
+  <script src="js/demos.js?v=202611251700" defer></script>
+  <script src="js/main.js?v=202611251700" defer></script>
+  <script src="js/jump.js?v=202611251700" defer></script>
 </body>
 </html>

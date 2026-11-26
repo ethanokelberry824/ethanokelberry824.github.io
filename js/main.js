@@ -30,6 +30,9 @@
     github: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
     copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
     check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>',
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5z"/></svg>',
+    code: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>',
+    target: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
   };
 
   function logoOrMark(item) {
@@ -84,9 +87,10 @@
 
     $("#heroCtas").innerHTML =
       '<a class="btn btn-primary" href="' + esc(S.resume) + '" download>' + I.download + "Download resume</a>" +
-      '<a class="btn" href="tel:' + esc(S.phoneHref) + '">' + I.phone + esc(S.phone) + "</a>" +
+      '<a class="btn" href="#discovery">' + I.target + "See how I fit your role</a>" +
       '<a class="btn btn-social" href="mailto:' + esc(S.email) + '" aria-label="Email" title="Email">' + I.mail + '<span class="lbl">Email</span></a>' +
-      '<a class="btn btn-social" href="' + esc(S.linkedin) + '" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">' + I.linkedin + '<span class="lbl">LinkedIn</span></a>';
+      '<a class="btn btn-social" href="' + esc(S.linkedin) + '" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">' + I.linkedin + '<span class="lbl">LinkedIn</span></a>' +
+      '<a class="btn btn-social" href="https://github.com/' + esc(S.githubUser) + '" target="_blank" rel="noopener" aria-label="GitHub profile" title="GitHub">' + I.github + '<span class="lbl">GitHub</span></a>';
 
     $("#creds").innerHTML = S.credentials.map(function (c) {
       return '<div class="cred">' + logoOrMark(c) + '<span class="cred-text"><b>' + esc(c.title) + "</b><small>" + esc(c.note) + "</small></span></div>";
@@ -267,7 +271,7 @@
   }
 
   function fitSummaryText() {
-    var lines = [S.name + ": fit summary", S.status + " · B.S. Computer Science, CSUSM (May 2027)", ""];
+    var lines = [S.name + ": fit summary", S.status + " · B.S. Computer Science, CSUSM", ""];
     chosenNeeds().forEach(function (n) {
       lines.push("✓ " + n.label);
       n.evidence.forEach(function (ev) { lines.push("   - " + ev.src + ": " + ev.text); });
@@ -306,12 +310,16 @@
 
   /* ---- 02 experience ---------------------------------------------------- */
   function renderExperience() {
+    var lastGroup = "";
     var html = S.experience.map(function (j) {
+      var group = j.group || "";
+      var label = group && group !== lastGroup ? '<p class="tl-group reveal">' + esc(group) + "</p>" : "";
+      lastGroup = group;
       var now = /present/i.test(j.dates);
       var stats = j.stats ? '<div class="job-stats">' + j.stats.map(function (s) {
         return "<span><b>" + esc(s.value) + "</b>" + esc(s.label) + "</span>";
       }).join("") + "</div>" : "";
-      return '<article class="job reveal" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
+      return label + '<article class="job reveal" id="' + esc(j.id) + '" style="--co:' + esc(j.color) + '">' +
         '<div class="job-mark' + (j.logo ? " has-logo" : "") + (j.img ? " has-img" : "") + '" aria-hidden="true">' + logoOrMark(j) + "</div>" +
         '<div class="card"><div class="job-top"><div><h3 class="job-role">' + esc(j.role) + '</h3><p class="job-co"><i></i>' + esc(j.company) +
         (j.companyNote ? '<span class="job-note">' + esc(j.companyNote) + "</span>" : "") + "</p></div>" +
@@ -323,9 +331,8 @@
     $("#timeline").insertAdjacentHTML("beforeend", html);
 
     $("#eduGrid").innerHTML = S.education.map(function (e) {
-      return '<div class="card edu reveal' + (e.main ? " edu-main" : "") + '"><h4>' + esc(e.school) + "</h4><p>" + esc(e.degree) + "</p>" +
+      return '<div class="edu"><h4>' + esc(e.school) + "</h4><p>" + esc(e.degree) + "</p>" +
         (e.detail ? '<p class="edu-detail">' + esc(e.detail) + "</p>" : "") +
-        (e.extra ? '<p class="edu-extra">' + esc(e.extra) + "</p>" : "") +
         '<p class="when">' + esc(e.dates) + " · " + esc(e.location) + "</p></div>";
     }).join("");
   }
@@ -333,22 +340,51 @@
   /* ---- 03 projects ------------------------------------------------------ */
   function renderProjects() {
     var wrap = $("#projectList");
-    wrap.innerHTML = S.projects.map(function (p) {
-      var link = p.link ? '<div class="project-links"><a class="btn btn-sm btn-primary" href="' + esc(p.link.href) + '" target="_blank" rel="noopener">' + esc(p.link.label) + I.external + "</a></div>" : "";
-      var visual = p.visual === "outline"
-        ? '<div class="outline"><p class="mini-label">' + esc(p.outlineTitle) + '</p><ol>' +
-          p.outline.map(function (o, i) { return '<li><span class="num">' + (i + 1) + "</span><span>" + esc(o) + "</span></li>"; }).join("") + "</ol></div>"
-        : "";
-      return '<article class="card project reveal" id="' + esc(p.id) + '">' +
-        '<div class="project-info"><p class="project-when">' + esc(p.when) + '</p><h3 class="project-title">' + esc(p.title) + "</h3>" +
+    var LINK_ICON = { live: I.external, code: I.code, video: I.play };
+    function links(p) {
+      if (!p.links || !p.links.length) return "";
+      return '<div class="project-links">' + p.links.map(function (l, i) {
+        return '<a class="btn btn-sm' + (i === 0 ? " btn-primary" : "") + '" href="' + esc(l.href) + '" target="_blank" rel="noopener">' +
+          (LINK_ICON[l.kind] || I.external) + esc(l.label) + "</a>";
+      }).join("") + "</div>";
+    }
+    function info(p) {
+      return '<div class="project-info"><p class="project-when">' + esc(p.when) +
+        (p.status ? '<span class="project-status">' + esc(p.status) + "</span>" : "") + "</p>" +
+        '<h3 class="project-title">' + esc(p.title) + "</h3>" +
         '<p class="project-summary">' + esc(p.summary) + "</p>" +
+        (p.team ? '<p class="project-team">' + esc(p.team) + "</p>" : "") +
         '<div class="tags">' + p.stack.map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") + "</div>" +
-        link + "</div>" +
-        '<div class="demo" data-visual="' + esc(p.visual) + '">' + visual + "</div></article>";
-    }).join("");
+        links(p) + "</div>";
+    }
+    function visual(p) {
+      if (p.visual === "outline") {
+        return '<div class="outline"><p class="mini-label">' + esc(p.outlineTitle) + '</p><ol>' +
+          p.outline.map(function (o, i) { return '<li><span class="num">' + (i + 1) + "</span><span>" + esc(o) + "</span></li>"; }).join("") + "</ol></div>";
+      }
+      if (p.visual === "results") {
+        var max = Math.max.apply(null, p.results.map(function (r) { return r.value; }));
+        return '<div class="results"><p class="mini-label">' + esc(p.resultsTitle) + "</p><ul>" +
+          p.results.map(function (r) {
+            return '<li class="' + (r.best ? "best" : "") + '"><span class="r-label">' + esc(r.label) + '</span><span class="r-bar"><i style="width:' +
+              (r.value / max * 100).toFixed(1) + '%"></i></span><b class="r-val">' + r.value.toFixed(2) + "</b></li>";
+          }).join("") + '</ul><p class="results-note">' + esc(p.resultsNote) + "</p></div>";
+      }
+      return "";
+    }
+    var shown = S.projects.filter(function (p) { return !p.draft; });
+    var featured = shown.filter(function (p) { return p.size !== "compact"; });
+    var compact = shown.filter(function (p) { return p.size === "compact"; });
+    wrap.innerHTML = featured.map(function (p) {
+      return '<article class="card project reveal" id="' + esc(p.id) + '">' + info(p) +
+        '<div class="demo" data-visual="' + esc(p.visual || "") + '">' + visual(p) + "</div></article>";
+    }).join("") +
+      (compact.length ? '<div class="project-grid">' + compact.map(function (p) {
+        return '<article class="card project project-sm reveal" id="' + esc(p.id) + '">' + info(p) + "</article>";
+      }).join("") + "</div>" : "");
     $$(".demo", wrap).forEach(function (el) {
       var v = el.getAttribute("data-visual");
-      if (v !== "outline" && window.Demos) window.Demos.mount(v, el);
+      if (v && v !== "outline" && v !== "results" && window.Demos) window.Demos.mount(v, el);
     });
   }
 
@@ -371,11 +407,11 @@
       '<a class="btn btn-social" href="https://github.com/' + esc(S.githubUser) + '" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">' + I.github + "</a>";
 
     var rows = [
-      ["Targeting", "Sales Engineering · Solutions Consulting"],
-      ["Graduating", "B.S. Computer Science, CSUSM · May 2027"],
+      ["Targeting", "Sales Engineer · Solutions Engineer · Solutions Architect"],
+      ["Graduating", "B.S. Computer Science, CSUSM · May 2027 · 3.5 GPA"],
       ["Based in", S.location],
-      ["Recent", "Cisco Technical Sales Engineering Intern ('26) · AWS Student Builder Campus Leader"],
-      ["Proof", "2× quota and 500+ viewer live streams at a live commerce startup"],
+      ["Recent", "Cisco Technical Sales Engineering Intern ('26) · Incoming AI Club President"],
+      ["Proof", "Built Corro at Cisco (97% of 39 sellers would send its draft) · 2× quota as a startup's first hire"],
     ];
     $("#tldr").innerHTML = rows.map(function (r) {
       return "<div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>";

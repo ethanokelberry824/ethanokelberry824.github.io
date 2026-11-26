@@ -1,6 +1,6 @@
 /* ==========================================================================
    Project demos (sample data only)
-   - outreach: mini app walkthrough of the Internship Outreach Agent
+   - outreach: mini app walkthrough of the AI Referral Outreach Agent
    - fantasy:  chat with the Fantasy Baseball Pickup Agent
    Both start when the visitor presses the button.
    ========================================================================== */
@@ -38,32 +38,32 @@
      ------------------------------------------------------------------------ */
   var LISTINGS = [
     {
-      label: "Solutions Engineer Intern · Northwind Cloud",
-      company: "Northwind Cloud", domain: "northwind-cloud.example", title: "Solutions Engineer Intern",
+      label: "Early career SA program · Northwind Cloud",
+      company: "Northwind Cloud", program: "early career Solutions Architect program",
       people: [
-        ["Jordan Lee", "Director of Solutions Engineering"],
-        ["Priya Shah", "Sales Engineering Manager"],
-        ["Ana Torres", "Senior Solutions Engineer"],
-        ["Marcus Bell", "University Recruiter"],
+        ["Marcus Bell", "University Recruiter", 10, "Posted the program on LinkedIn"],
+        ["Jordan Lee", "Program Manager, Early Careers", 9, "Runs the program"],
+        ["Ana Torres", "Senior Solutions Architect", 8, "Went through the program"],
+        ["Priya Shah", "Solutions Architect Manager", 7, "Hires from the program"],
       ],
     },
     {
-      label: "Sales Engineering Intern · Lumen Data",
-      company: "Lumen Data", domain: "lumendata.example", title: "Sales Engineering Intern",
+      label: "Presales Academy · Lumen Data",
+      company: "Lumen Data", program: "Presales Academy",
       people: [
-        ["Chris Nguyen", "VP of Sales Engineering"],
-        ["Dana Brooks", "Solutions Architect"],
-        ["Leo Ramirez", "Early Careers Recruiter"],
+        ["Leo Ramirez", "Early Careers Recruiter", 10, "Recruits for the academy"],
+        ["Dana Brooks", "Solutions Engineer", 8, "Posts about taking calls with students"],
+        ["Chris Nguyen", "Director of Sales Engineering", 7, "Leads the SE team"],
       ],
     },
     {
-      label: "Associate Solutions Consultant · Brightpath",
-      company: "Brightpath Software", domain: "brightpath.example", title: "Associate Solutions Consultant",
+      label: "Solutions Consultant rotation · Brightpath",
+      company: "Brightpath Software", program: "Solutions Consultant rotation",
       people: [
-        ["Maya Patel", "Head of Solutions Consulting"],
-        ["Sam Whitaker", "Principal Solutions Consultant"],
-        ["Erin Cho", "Solutions Consultant"],
-        ["Tyler Grant", "Campus Recruiting Lead"],
+        ["Tyler Grant", "Campus Recruiting Lead", 10, "Shared the posting"],
+        ["Erin Cho", "Solutions Consultant", 9, "Finished the rotation last year"],
+        ["Maya Patel", "Head of Solutions Consulting", 7, "Owns the program"],
+        ["Sam Whitaker", "Principal Solutions Consultant", 6, "Mentors new hires"],
       ],
     },
   ];
@@ -72,13 +72,13 @@
     root.innerHTML =
       '<div class="app">' +
       '<div class="app-bar"><span class="app-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="app-title">Outreach Agent</span><span class="app-note">Demo · sample data</span></div>' +
-      '<div class="app-input"><label class="field"><span>Job listing</span><select class="select">' +
+      '<div class="app-input"><label class="field"><span>Target program</span><select class="select">' +
       LISTINGS.map(function (l, i) { return '<option value="' + i + '">' + esc(l.label) + "</option>"; }).join("") +
       '</select></label><button type="button" class="btn btn-sm btn-primary" data-act="run">' + PLAY + "<span>Run</span></button></div>" +
       '<ol class="app-steps">' +
-      '<li class="app-step" data-s="0"><div class="step-head"><span class="step-n">1</span><b>Find the right people</b><span class="step-s"></span></div><ul class="people"></ul></li>' +
-      '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Write a personal email to each one</b><span class="step-s"></span></div><div class="bar"><span></span></div><div class="mail"></div></li>' +
-      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Send</b><span class="step-s"></span></div><ul class="outbox"></ul></li>' +
+      '<li class="app-step" data-s="0"><div class="step-head"><span class="step-n">1</span><b>Find and rate people likely to help</b><span class="step-s"></span></div><ul class="people"></ul></li>' +
+      '<li class="app-step" data-s="1"><div class="step-head"><span class="step-n">2</span><b>Draft a LinkedIn message for each one</b><span class="step-s"></span></div><div class="bar"><span></span></div><div class="mail"></div></li>' +
+      '<li class="app-step" data-s="2"><div class="step-head"><span class="step-n">3</span><b>Wait for my approval</b><span class="step-s"></span></div><ul class="outbox"></ul></li>' +
       "</ol></div>";
 
     var sel = root.querySelector("select");
@@ -114,48 +114,42 @@
       btn.querySelector("span").textContent = "Running…";
       people.innerHTML = "";
 
-      plan.push([150, function () { status(0, "Searching " + L.domain + "…"); }]);
+      plan.push([150, function () { status(0, "Researching " + L.company + "…"); }]);
       L.people.forEach(function (p) {
         plan.push([520, function () {
           var li = document.createElement("li");
-          li.innerHTML = '<span class="avatar">' + esc(initials(p[0])) + "</span><span class=\"who\"><b>" + esc(p[0]) + "</b><small>" + esc(p[1]) + '</small></span><span class="tag-ok">Verified</span>';
+          li.innerHTML = '<span class="avatar">' + esc(initials(p[0])) + "</span><span class=\"who\"><b>" + esc(p[0]) + "</b><small>" + esc(p[1]) + " · " + esc(p[3]) +
+            '</small></span><span class="tag-ok">' + p[2] + "/10</span>";
           people.appendChild(li);
         }]);
       });
-      plan.push([350, function () { status(0, "Found " + n + " people", true); status(1, "Writing 0 of " + n); }]);
+      plan.push([350, function () { status(0, "Kept " + n + " rated 6+", true); status(1, "Drafting 0 of " + n); }]);
       for (var k = 1; k <= n; k++) {
         (function (k) {
           plan.push([420, function () {
             bar.style.width = (k / n) * 100 + "%";
-            status(1, k === n ? n + " emails written" : "Writing " + k + " of " + n, k === n);
+            status(1, k === n ? n + " messages drafted" : "Drafting " + k + " of " + n, k === n);
             if (k === 1) {
               var p = L.people[0];
-              mail.innerHTML = "<p class=\"mail-sub\">Subject: " + esc(L.title) + " at " + esc(L.company) + "</p>" +
-                "<p>Hi " + esc(p[0].split(" ")[0]) + ", I saw " + esc(L.company) + " is hiring a " + esc(L.title) +
-                ". I'm a Computer Science student at Cal State San Marcos who likes explaining technical products to the people who buy them. Would you be open to a quick call?</p>";
+              mail.innerHTML = "<p class=\"mail-sub\">LinkedIn message · " + esc(p[0]) + "</p>" +
+                "<p>Hi " + esc(p[0].split(" ")[0]) + ", I came across " + esc(L.company) + "'s " + esc(L.program) +
+                ". I'm a CS senior at Cal State San Marcos and I interned as a Technical Sales Engineer at Cisco this summer. Would you be open to a quick call about what makes someone stand out for it?</p>";
             }
           }]);
         })(k);
       }
-      plan.push([300, function () { status(2, "Sending 0 of " + n); }]);
-      for (var j = 0; j < n; j++) {
-        (function (j) {
-          var p = L.people[j], row;
-          plan.push([200, function () {
-            row = document.createElement("li");
-            row.innerHTML = '<span class="env">' + PLANE + '</span><span class="out-to"><b>To ' + esc(p[0]) + "</b><small>" +
-              esc(L.title) + " at " + esc(L.company) + '</small></span><span class="out-state">Sending…</span>';
-            outbox.appendChild(row);
-          }]);
-          plan.push([520, function () {
-            row.classList.add("sent");
-            row.querySelector(".out-state").outerHTML = '<span class="tag-sent">' + CHECK + "Sent</span>";
-            status(2, j + 1 === n ? "" : "Sending " + (j + 1) + " of " + n);
-          }]);
-        })(j);
-      }
-      plan.push([250, function () {
-        status(2, n + " personal emails sent", true);
+      plan.push([300, function () { status(2, "Queuing for review…"); }]);
+      L.people.forEach(function (p) {
+        plan.push([380, function () {
+          var row = document.createElement("li");
+          row.className = "sent";
+          row.innerHTML = '<span class="env">' + PLANE + '</span><span class="out-to"><b>To ' + esc(p[0]) + "</b><small>" +
+            esc(p[1]) + " at " + esc(L.company) + '</small></span><span class="tag-ok">Needs my OK</span>';
+          outbox.appendChild(row);
+        }]);
+      });
+      plan.push([300, function () {
+        status(2, n + " drafts ready. Nothing sends until I approve it.", true);
         btn.disabled = false;
         btn.querySelector("span").textContent = "Run again";
       }]);
