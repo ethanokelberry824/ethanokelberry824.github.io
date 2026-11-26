@@ -365,9 +365,9 @@
       if (p.visual === "results") {
         var max = Math.max.apply(null, p.results.map(function (r) { return r.value; }));
         return '<div class="results"><p class="mini-label">' + esc(p.resultsTitle) + "</p>" +
-          (p.resultsModel ? '<p class="results-model">' + esc(p.resultsModel) + "</p>" : "") + "<ul>" +
+          "<ul>" +
           p.results.map(function (r) {
-            return '<li class="' + (r.best ? "best" : "") + '"><span class="r-label">' + esc(r.label) + '</span><span class="r-bar"><i style="width:' +
+            return '<li class="' + (r.best ? "best" : r.ref ? "ref" : "") + '"><span class="r-label">' + esc(r.label) + '</span><span class="r-bar"><i style="width:' +
               (r.value / max * 100).toFixed(1) + '%"></i></span><b class="r-val">' + r.value.toFixed(2) + "</b></li>";
           }).join("") + '</ul><p class="results-note">' + esc(p.resultsNote) + "</p></div>";
       }

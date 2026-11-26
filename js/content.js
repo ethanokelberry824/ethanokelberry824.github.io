@@ -237,35 +237,14 @@ window.SITE = {
         { label: "Code", href: "https://github.com/ethanokelberry824/nba-points", kind: "code" },
       ],
       visual: "results",
-      resultsTitle: "Average points of error on a season it never trained on",
-      resultsModel: "Best model: a blend of 60% gradient boosting (HistGradientBoosting) and 40% Huber regression",
+      resultsTitle: "Average points off per game (lower is better)",
       results: [
-        { label: "Blended model", value: 4.86, best: true },
-        { label: "Ridge regression", value: 4.90 },
+        { label: "Statz.ai (pro site)", value: 4.75, ref: true },
+        { label: "My model", value: 4.86, best: true },
         { label: "Season average", value: 5.05 },
         { label: "Last 5 games", value: 5.24 },
       ],
-      resultsNote: "Lower is better. 7% better than the last-5-games rule, using 35 features from 10 seasons of game logs. On live 2026-27 games it has never seen (through Nov 8), it averages 4.85 vs 5.34 for the last-5 rule.",
-    },
-    {
-      id: "project-f1",
-      size: "feature",
-      title: "Mini F1 Lap Timing System",
-      when: "Fall 2026 · 3-person team · CS 435 Embedded Systems capstone",
-      summary:
-        "A Hot Wheels race track with automatic lap timing. An STM32 board runs the start lights, detects the car at the finish line and a sector checkpoint, and times every lap to the millisecond over a 3-lap race. I built the Python dashboard that shows the race live on a laptop.",
-      stack: ["STM32", "C", "Python", "Tkinter", "PySerial"],
-      links: [
-        { label: "Watch the demo", href: "https://drive.google.com/file/d/1VIZQU4o0guhosdVaRyIGiSh9OrAJJ5fb/view?usp=sharing", kind: "video" },
-      ],
-      visual: "outline",
-      outlineTitle: "What I built",
-      outline: [
-        "Live mode reads race data from the board over USB serial on a background thread, so the screen never freezes.",
-        "Simulator mode runs a full fake race with no board plugged in, so we could test before the firmware was ready.",
-        "Proposed the serial message format the board and dashboard share, with a small, unit-tested parser.",
-        "Every line from the board is saved to a CSV test log. Bad lines get skipped instead of crashing the app.",
-      ],
+      resultsNote: "Within about a tenth of a point of a pro projection site, and 7% better than the last-5 rule. Mine is scored on the full 2025-26 season it never trained on. Statz.ai grades itself on 5,866 games from Mar 28 to May 1, 2026 and predicts before tipoff from injury reports, so it's a ballpark, not a head-to-head. Live on 2026-27 games so far: 4.87 vs 5.32 for the last-5 rule (through Nov 24).",
     },
     {
       id: "project-outreach",
@@ -276,6 +255,18 @@ window.SITE = {
         "An AI agent that researches target companies, rates contacts by how likely they are to help, and drafts a tailored LinkedIn message for each one. Nothing goes out until I approve it. It manages 800+ contacts across 10+ company pipelines, and it landed me an internal AWS referral and an AWS Solutions Architect mentor.",
       stack: ["Claude", "Gemini", "Make.com", "Google Sheets"],
       visual: "outreach",
+    },
+    {
+      id: "project-f1",
+      size: "compact",
+      title: "Mini F1 Lap Timing System",
+      when: "Fall 2026 · 3-person team · CS 435 Embedded Systems",
+      summary:
+        "Built an F1 race track simulation on an embedded system, with sensors that track every lap and a live race dashboard on a laptop.",
+      stack: ["STM32", "Sensors", "Python"],
+      links: [
+        { label: "Watch the demo", href: "https://drive.google.com/file/d/1VIZQU4o0guhosdVaRyIGiSh9OrAJJ5fb/view?usp=sharing", kind: "video" },
+      ],
     },
     {
       id: "project-cisco-ai",
