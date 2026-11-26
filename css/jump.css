@@ -1,0 +1,17 @@
+/* Section jumps: fade and slide (js/jump.js). The nav, side rail and
+   progress bar stay still while the page content changes. */
+.nav { view-transition-name: site-nav; }
+.stage-rail { view-transition-name: stage-rail; }
+.scroll-progress { view-transition-name: scroll-progress; }
+::view-transition-old(site-nav), ::view-transition-new(site-nav),
+::view-transition-old(stage-rail), ::view-transition-new(stage-rail),
+::view-transition-old(scroll-progress), ::view-transition-new(scroll-progress) { animation: none; }
+
+::view-transition-old(root) { animation: jump-out 170ms cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(root) { animation: jump-in 360ms cubic-bezier(.2, .8, .2, 1) 70ms both; }
+@keyframes jump-out { to { opacity: 0; transform: translateY(-14px); } }
+@keyframes jump-in { from { opacity: 0; transform: translateY(28px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
