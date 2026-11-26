@@ -97,7 +97,7 @@ window.SITE = {
       id: "ai",
       label: "Proficient in AI tools",
       evidence: [
-        { src: "Outreach Agent", text: "Built an AI agent with Claude, Gemini and Make.com that manages 800+ contacts across 10+ company pipelines.", href: "#project-outreach" },
+        { src: "Outreach Agent", text: "Built an AI agent with Claude, Gemini and Make.com that manages 800+ contacts across 10+ company pipelines and has landed internal referrals at AWS, Intel, TikTok and IBM.", href: "#project-outreach" },
         { src: "Cisco", text: "Built Corro, an AI demo that drafts discount justifications for Cisco sellers.", href: "#exp-cisco" },
         { src: "WudjaBudja", text: "Wired the Gemini API into a team app to plan one trip around everyone's budget.", href: "#project-wudjabudja" },
         { src: "Claude", text: "Builds custom Claude skills, like one that pulls lecture transcripts from Otter and files them in Google Drive." },
@@ -252,7 +252,7 @@ window.SITE = {
       title: "AI Referral Outreach Agent",
       when: "Feb 2026 – Present",
       summary:
-        "An AI agent that researches target companies, rates contacts by how likely they are to help, and drafts a tailored LinkedIn message for each one. Nothing goes out until I approve it. It manages 800+ contacts across 10+ company pipelines, and it landed me an internal AWS referral and an AWS Solutions Architect mentor.",
+        "An AI agent that researches target companies, rates contacts by how likely they are to help, and drafts a tailored LinkedIn message for each one. Nothing goes out until I approve it. It manages 800+ contacts across 10+ company pipelines, and it's landed me internal referrals at AWS, Intel, TikTok and IBM.",
       stack: ["Claude", "Gemini", "Make.com", "Google Sheets"],
       visual: "outreach",
     },
