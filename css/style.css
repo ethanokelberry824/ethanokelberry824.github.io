@@ -884,7 +884,7 @@ kbd {
 .project-sm .project-title { font-size: 21px; }
 .project-sm .project-summary { font-size: 15px; }
 .results ul { list-style: none; display: grid; gap: 14px; margin: 18px 0 0; padding: 0; }
-.results li { display: grid; grid-template-columns: 118px minmax(0, 1fr) 52px; gap: 12px; align-items: center; color: var(--text-2); font-size: 15px; }
+.results li { display: grid; grid-template-columns: 140px minmax(0, 1fr) 52px; gap: 12px; align-items: center; color: var(--text-2); font-size: 15px; }
 .r-bar { height: 12px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
 .r-bar i { display: block; height: 100%; border-radius: inherit; background: var(--border-strong); }
 .results li.best { color: var(--text); font-weight: 600; }
@@ -892,6 +892,7 @@ kbd {
 .r-val { font-family: var(--font-display); font-size: 18px; text-align: right; }
 .results li.best .r-val { color: var(--accent); }
 .results-note { margin-top: 16px; color: var(--muted); font-size: 14px; }
+.results-model { margin-top: 10px; color: var(--text); font-size: 14.5px; font-weight: 500; }
 
 /* Talk outline */
 .outline ol { list-style: none; display: grid; gap: 16px; margin-top: 16px; }
@@ -996,6 +997,42 @@ kbd {
 .mail { font-size: 13.5px; color: var(--text-2); }
 .mail:not(:empty) { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); animation: swap-in .4s var(--ease); }
 .mail-sub { color: var(--text); font-weight: 600; margin-bottom: 6px; }
+
+/* Outreach: scan log and grading */
+.scan { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin-top: 12px; }
+.scan li { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 10px; background: var(--surface-2); font-size: 13px; color: var(--text-2); animation: swap-in .3s var(--ease); }
+.scan li.scan-empty { background: none; color: var(--muted); font-size: 13.5px; padding: 0 0 0 32px; }
+.scan-ico { display: grid; place-items: center; width: 22px; height: 22px; flex: none; color: var(--accent); }
+.scan-ico svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.scan li:not(.done) .scan-ico svg { animation: rot 1.6s linear infinite; }
+.scan-src { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scan-n { margin-left: auto; flex: none; font: 500 12px var(--font-mono); color: var(--muted); }
+.scan li.done .scan-n { color: var(--good); }
+.grade-key { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.grade-key:empty { display: none; }
+.grade-key span { display: inline-flex; align-items: center; gap: 6px; }
+.grade-key i { width: 14px; height: 6px; border-radius: 3px; }
+.k0 { background: var(--accent); }
+.k1 { background: var(--good); }
+.k2 { background: var(--biz); }
+.grades { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 10px; }
+.grades li { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 10px; background: var(--surface-2); animation: swap-in .35s var(--ease); transition: opacity .3s; }
+.grades .who { flex: 1; }
+.grades .who small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.meters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 6px; max-width: 240px; }
+.meter { height: 5px; border-radius: 3px; background: color-mix(in srgb, var(--border-strong) 60%, transparent); overflow: hidden; }
+.meter i { display: block; width: 0; height: 100%; border-radius: inherit; transition: width .5s var(--ease); }
+.grade { display: flex; align-items: baseline; gap: 1px; flex: none; min-width: 52px; justify-content: flex-end; }
+.grade b { font: 700 20px var(--font-display); color: var(--muted); }
+.grade small { font-size: 11px; color: var(--muted); }
+.grades li.graded.g-hi .grade b { color: var(--good); }
+.grades li.graded.g-mid .grade b { color: var(--accent); }
+.grades li.graded.g-ok .grade b { color: var(--text); }
+.grades li.graded.g-low { opacity: .55; }
+.grades li.graded.g-low .who b { text-decoration: line-through; }
+.skip-tag { flex: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--muted); font-size: 11px; font-weight: 600; }
+.mail-hold { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--good); font-size: 12.5px; font-weight: 600; }
+.mail-hold svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Outreach: step 3 outbox */
 .outbox { list-style: none; display: grid; gap: 8px; margin-top: 12px; }
@@ -1278,6 +1315,11 @@ kbd {
   .picks li { flex-wrap: wrap; }
   .pick-tag { order: 5; }
   .pmail-head { flex-wrap: wrap; }
+  .meters { max-width: none; }
+  .skip-tag { display: none; }
+  .step-head { flex-wrap: wrap; row-gap: 4px; }
+  .step-s { margin-left: 32px; white-space: normal; }
+  .scan-n { display: none; }
   .pmail-head .out-to { flex: 1 1 200px; }
   .statline .hide-sm { display: none; }
   .pmail-head .tag-sent, .pmail-head .out-state { margin-left: 44px; }

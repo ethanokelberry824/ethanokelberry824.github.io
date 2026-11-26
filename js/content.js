@@ -171,6 +171,7 @@ window.SITE = {
       id: "exp-aiclub",
       group: "Leadership",
       mark: "AI",
+      img: "assets/logo-aiclub.png",
       company: "CSUSM AI Club",
       role: "Incoming President",
       dates: "Starting Jan 2027",
@@ -237,12 +238,14 @@ window.SITE = {
       ],
       visual: "results",
       resultsTitle: "Average points of error on a season it never trained on",
+      resultsModel: "Best model: a blend of 60% gradient boosting (HistGradientBoosting) and 40% Huber regression",
       results: [
-        { label: "My model", value: 4.86, best: true },
+        { label: "Blended model", value: 4.86, best: true },
+        { label: "Ridge regression", value: 4.90 },
         { label: "Season average", value: 5.05 },
         { label: "Last 5 games", value: 5.24 },
       ],
-      resultsNote: "Lower is better. 7% better than the last-5-games rule, with 35 features from 10 seasons of game logs.",
+      resultsNote: "Lower is better. 7% better than the last-5-games rule, using 35 features from 10 seasons of game logs. On live 2026-27 games it has never seen (through Nov 8), it averages 4.85 vs 5.34 for the last-5 rule.",
     },
     {
       id: "project-f1",
@@ -251,7 +254,6 @@ window.SITE = {
       when: "Fall 2026 · 3-person team · CS 435 Embedded Systems capstone",
       summary:
         "A Hot Wheels race track with automatic lap timing. An STM32 board runs the start lights, detects the car at the finish line and a sector checkpoint, and times every lap to the millisecond over a 3-lap race. I built the Python dashboard that shows the race live on a laptop.",
-      team: "Tharun: firmware · Melekai: track and electronics · Me: dashboard",
       stack: ["STM32", "C", "Python", "Tkinter", "PySerial"],
       links: [
         { label: "Watch the demo", href: "https://drive.google.com/file/d/1VIZQU4o0guhosdVaRyIGiSh9OrAJJ5fb/view?usp=sharing", kind: "video" },
@@ -299,15 +301,6 @@ window.SITE = {
       links: [
         { label: "Team repo", href: "https://github.com/milesbaack/wudjabudja", kind: "code" },
       ],
-    },
-    {
-      id: "project-fantasy",
-      size: "compact",
-      title: "Fantasy Baseball Pickup Agent",
-      when: "2025",
-      summary:
-        "Every day it looks up each starting pitcher's projected stat line, checks who's already rostered in my league, and emails me the best pickups. Runs on a schedule with GitHub Actions.",
-      stack: ["Python", "GitHub Actions", "Email automation"],
     },
     {
       // Hidden until it's ready: fill in the details and links, then set draft to false.
